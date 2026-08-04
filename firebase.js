@@ -3,6 +3,7 @@ import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWith
 import { getFirestore, addDoc, collection, doc, getDocs, limit, orderBy, query, serverTimestamp, setDoc } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
 
 const config = window.FISHON_FIREBASE_CONFIG;
+const guestSessionKey = 'fishon-active-guest-session';
 window.addEventListener('DOMContentLoaded', () => {
   const openButton = document.querySelector('#emailLogin');
   const modal = document.querySelector('#emailLoginModal');
@@ -37,8 +38,8 @@ if (config) {
   window.fishonData = {
     async signInGoogle() { return signInWithPopup(auth, new GoogleAuthProvider()); },
     async signInGuest() { return signInAnonymously(auth); },
-    async startFreshGuest() { if (auth.currentUser?.isAnonymous) await signOut(auth); return signInAnonymously(auth); },
-    async signOut() { return signOut(auth); },
+    async startFreshGuest() { sessionStorage.setItem(guestSessionKey, '1'); if (auth.currentUser?.isAnonymous) await signOut(auth); return signInAnonymously(auth); },
+    async signOut() { sessionStorage.removeItem(guestSessionKey); return signOut(auth); },
     async signUpWithEmail(email, password) { return createUserWithEmailAndPassword(auth, email, password); },
     async signInWithEmail(email, password) { return signInWithEmailAndPassword(auth, email, password); },
     async saveUserProfile(user, profile = {}) {
@@ -57,6 +58,11 @@ if (config) {
     async loadRanking() { const snap = await getDocs(query(collection(db, 'catches'), orderBy('lengthCm', 'desc'), limit(50))); return snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); }
   };
   onAuthStateChanged(auth, async user => {
+    // 익명 계정은 현재 브라우저 탭에서만 유지한다. 탭을 닫고 다시 열면 새 게스트로 시작한다.
+    if (user?.isAnonymous && !sessionStorage.getItem(guestSessionKey)) {
+      await signOut(auth);
+      return;
+    }
     window.fishonUser = user;
     window.dispatchEvent(new CustomEvent('fishon-auth-change', { detail: { user } }));
     if (user) {
