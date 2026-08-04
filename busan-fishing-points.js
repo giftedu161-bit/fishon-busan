@@ -26,6 +26,7 @@ window.addEventListener('load', () => {
   if (submitRecord) submitRecord.onclick = async () => {
     const lengthCm = Number(document.querySelector('#lengthInput')?.value);
     if (!window.fishonPhotoReady) { window.toast?.('사진을 먼저 선택하거나 촬영해주세요.'); return; }
+    if (!window.fishonAnalysisVerified) { window.toast?.('AI가 물고기와 어종을 판별한 사진만 공식 기록으로 제출할 수 있어요.'); return; }
     if (!Number.isFinite(lengthCm) || lengthCm <= 0) { window.toast?.('직접 측정한 길이를 입력해주세요.'); return; }
     const selectedPoint = points[0];
     const user = window.fishonUser;

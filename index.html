@@ -50,11 +50,11 @@
 
       <section class="page" id="analysisPage">
         <div class="page-head"><button class="back" data-go="capture">‹</button><div><p class="eyebrow">AI ANALYSIS</p><h2>조과 분석 결과</h2></div></div>
-        <div class="analysis-photo"><img id="analysisImage" alt="분석 사진" /><span class="badge verified">✓ AI 인증 가능</span></div>
-        <div class="result-card"><div><span>추정 어종</span><strong>감성돔</strong><small>신뢰도 96%</small></div><div><span>사진 추정 전장</span><strong>42.6 <small>cm</small></strong><small>측정매트 눈금 인식</small></div></div><div class="ai-evidence"><span>◈</span><p><b>어종 데이터베이스 대조 완료</b><br>부산 연안 출현 데이터 · 체형 특징 · 지느러미 패턴을 함께 비교했어요.</p></div>
+        <div class="analysis-photo"><img id="analysisImage" alt="분석 사진" /><span class="badge verified" id="analysisBadge">AI 분석 대기</span></div>
+        <div class="result-card"><div><span>AI 판별 어종</span><strong id="analysisSpecies">분석 대기</strong><small id="analysisConfidence">사진을 등록해주세요</small></div><div><span>직접 측정 전장</span><strong id="analysisLength">- <small>cm</small></strong><small>측정값 입력 후 확정</small></div></div><div class="ai-evidence"><span>◈</span><p><b id="analysisEvidenceTitle">AI 모델 연결 대기</b><br><span id="analysisEvidenceText">AI Hub 학습 모델이 사진 속 물고기를 판별합니다.</span></p></div>
         <label class="field">직접 측정한 전장 (cm)<input id="lengthInput" type="number" step="0.1" value="42.8" inputmode="decimal" /></label>
-        <div class="verification"><span>✓</span><p><b>공식 랭킹 인증 가능</b><br>AI 추정값과 직접 입력값의 차이가 0.2cm입니다.</p></div>
-        <button class="primary" id="submitRecord">공식 기록으로 제출</button>
+        <div class="verification" id="analysisVerification"><span>○</span><p><b>AI 검증이 필요합니다</b><br>물고기와 어종이 판별되면 공식 기록 제출이 열립니다.</p></div>
+        <button class="primary disabled" id="submitRecord" disabled>공식 기록으로 제출</button>
       </section>
 
       <section class="busan-db-panel" id="busanDbPanel"><div class="db-panel-head"><span>BUSAN SPECIES DB</span><b>부산 해양생물 후보 분석</b><em id="dbSpeciesCount">12종 기준</em></div><div class="db-main"><span class="db-icon">🐟</span><div><strong id="dbPrimarySpecies">감성돔</strong><p id="dbPrimaryMeta">암초 · 해조류 · 수심 50m 이내</p></div><b id="dbPrimaryScore">96%</b></div><div class="db-candidates" id="dbCandidates"></div><p class="db-note">사진 형태·촬영 해역·계절 정보를 함께 비교한 후보 결과입니다.</p></section>
@@ -128,6 +128,6 @@
 
       <nav class="bottom-nav"><button class="active" data-go="home"><span>⌂</span>홈</button><button data-go="map"><span>⌖</span>지도</button><button data-go="capture" class="nav-catch"><span>＋</span></button><button data-go="mission"><span>◎</span>미션</button><button data-go="collection"><span>▧</span>도감</button></nav>
     </main>
-    <div class="toast" id="toast"></div><script src="firebase-config.js"></script><script src="ai-api-config.js?v=27"></script><script src="ai-api-client.js?v=27"></script><script src="busan-species-data.js?v=27"></script><script type="module" src="firebase.js?v=28"></script><script src="app.js?v=35"></script><script src="busan-fishing-points.js?v=28"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script src="openstreet-map.js?v=13"></script>
+    <div class="toast" id="toast"></div><script src="firebase-config.js"></script><script src="ai-api-config.js?v=27"></script><script src="ai-api-client.js?v=27"></script><script src="busan-species-data.js?v=28"></script><script type="module" src="firebase.js?v=28"></script><script src="app.js?v=35"></script><script src="busan-fishing-points.js?v=29"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script src="openstreet-map.js?v=13"></script>
   </body>
 </html>

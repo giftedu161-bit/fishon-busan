@@ -75,6 +75,25 @@ window.analyzeBusanPhotoFeatures = async function (image) {
   return { name, confidence, note: `사진 특징 기반 베타 분석 · 밝기 ${Math.round(brightness)} · 색상 대비 ${Math.round(saturation)}. 측정매트·어종 특징을 함께 확인해주세요.` };
 };
 
+window.renderAiVerification = function ({ species = null, confidence = 0, verified = false, detail = '' }) {
+  const submit = document.querySelector('#submitRecord');
+  const length = Number(document.querySelector('#lengthInput')?.value);
+  if (verified && confidence) window.fishonAnalysisConfidence = confidence;
+  const displayedConfidence = window.fishonAnalysisConfidence || confidence;
+  window.fishonAnalysisVerified = verified;
+  document.querySelector('#analysisSpecies').textContent = species || '미확인';
+  document.querySelector('#analysisConfidence').textContent = verified ? `AI 신뢰도 ${Math.round(displayedConfidence * 100)}%` : 'AI 어종 판별 실패';
+  document.querySelector('#analysisLength').innerHTML = Number.isFinite(length) && length > 0 ? `${length.toFixed(1)} <small>cm</small>` : '- <small>cm</small>';
+  const badge = document.querySelector('#analysisBadge');
+  badge.textContent = verified ? '✓ AI 어종 검증 완료' : 'AI 검증 실패';
+  badge.classList.toggle('verified', verified);
+  document.querySelector('#analysisEvidenceTitle').textContent = verified ? 'AI Hub EfficientDet-D2 모델 검증 완료' : 'AI 모델이 물고기를 확실히 찾지 못했습니다';
+  document.querySelector('#analysisEvidenceText').textContent = detail || (verified ? '사진에서 물고기와 어종 후보를 판별했습니다. 길이는 직접 측정값으로 확정합니다.' : '물고기 전체가 보이도록 밝은 곳에서 다시 촬영해주세요.');
+  document.querySelector('#analysisVerification').innerHTML = verified ? '<span>✓</span><p><b>공식 랭킹 인증 가능</b><br>AI 어종 판별을 통과했습니다. 직접 측정 길이로 기록을 제출하세요.</p>' : '<span>!</span><p><b>공식 랭킹 인증 불가</b><br>AI가 물고기를 판별한 사진에서만 공식 기록을 제출할 수 있습니다.</p>';
+  submit.disabled = !verified;
+  submit.classList.toggle('disabled', !verified);
+};
+
 window.addEventListener('load', () => {
   const collectionProgress = document.querySelector('#collectionPage .collection-progress');
   if (collectionProgress && !document.querySelector('.collection-visual')) {
@@ -85,14 +104,17 @@ window.addEventListener('load', () => {
   analyzeButton.onclick = async () => {
     const image = document.querySelector('#analysisImage');
     if (!image?.src) { window.toast?.('먼저 물고기 사진을 촬영하거나 선택해주세요.'); return; }
-    let result;
+    let apiResult;
     try {
-      const apiResult = await window.fishonAi?.analyze(image);
-      if (apiResult?.status === 'ready' && apiResult.species) result = { name: apiResult.species, confidence: `${Math.round((apiResult.confidence || 0) * 100)}%`, note: 'AI Hub EfficientDet 모델 분석 결과' };
-    } catch (error) { console.info('AI 서버 연결 실패, 베타 분석으로 전환', error); }
-    result = result || await window.analyzeBusanPhotoFeatures(image);
-    window.renderBusanSpeciesCandidates(result.name, result.confidence, result.note);
+      apiResult = await window.fishonAi?.analyze(image);
+    } catch (error) { console.info('AI 서버 연결 실패', error); }
+    const verified = Boolean(apiResult?.status === 'ready' && apiResult?.species);
+    window.renderAiVerification({ species: apiResult?.species, confidence: apiResult?.confidence || 0, verified, detail: apiResult?.message });
+    if (verified) window.renderBusanSpeciesCandidates(apiResult.species, `${Math.round(apiResult.confidence * 100)}%`, 'AI Hub EfficientDet-D2 실제 추론 결과');
     window.show?.('analysis');
-    window.toast?.(`${result.name} 후보를 분석했어요.`);
+    window.toast?.(verified ? `${apiResult.species} AI 검증을 완료했어요.` : 'AI가 물고기를 판별하지 못했어요. 다시 촬영해주세요.');
   };
+  document.querySelector('#lengthInput')?.addEventListener('input', () => {
+    if (window.fishonAnalysisVerified) window.renderAiVerification({ species: document.querySelector('#analysisSpecies')?.textContent, verified: true });
+  });
 });
