@@ -24,3 +24,31 @@
 .gallery-label{cursor:pointer}.gallery-label:hover{color:#087b82}#fileInput{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .ranking-empty{margin:28px 0;padding:22px 14px;border:1px dashed #b8d9d4;border-radius:16px;background:#f2faf8;color:#4c7774;font-size:12px;line-height:1.5;text-align:center}
 .record-stats{display:grid;grid-template-columns:repeat(3,1fr);margin:12px 0;border:1px solid #dbe9e7;border-radius:15px;background:#fff}.record-stats div{padding:14px 5px;text-align:center;border-right:1px solid #e6eeee}.record-stats div:last-child{border:0}.record-stats b,.record-stats small{display:block}.record-stats b{font-size:15px;color:#087b80}.record-stats small{margin-top:4px;font-size:10px;color:#7a9294}.record-filters{display:flex;gap:7px;margin:18px 0 8px}.record-filters button{border:1px solid #d5e4e2;border-radius:18px;background:#fff;padding:7px 11px;color:#55767b;font-size:11px}.record-filters button.selected{border-color:#0b8886;background:#e2f5f1;color:#087676;font-weight:800}.my-record{display:flex;align-items:center;gap:11px;padding:14px 4px;border-bottom:1px solid #e6eeee}.my-record>span{font-size:28px}.my-record div{flex:1}.my-record b{font-size:14px}.my-record b small{margin-left:4px;color:#087b80}.my-record p{margin-top:4px;color:#788f93;font-size:10px}.my-record em{font-size:10px;font-style:normal;color:#879a9c}
+
+/* Dark, card-based ranking screen */
+#rankingPage{min-height:calc(100vh - 24px);margin:-24px -20px -94px;padding:44px 20px 112px;background:#050607;color:#fff}
+#rankingPage .page-head{margin:0 0 26px}
+#rankingPage .eyebrow{color:#15e6a9}
+#rankingPage .page-head h2{font-size:28px;color:#fff;letter-spacing:-1.4px}
+#rankingPage .location{border-color:#4e5a58;background:transparent;color:#b8c4c0}
+#rankingPage .tabs{border-color:#303638;margin-bottom:15px}
+#rankingPage .tabs button{color:#899491;font-size:14px}
+#rankingPage .tabs button.selected{color:#18e7aa;border-color:#18e7aa}
+#rankingPage .species{display:flex;align-items:center;align-content:center;gap:8px;height:auto;min-height:42px;margin:0 -2px 20px;padding:1px 2px 5px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+#rankingPage .species::-webkit-scrollbar{display:none}
+#rankingPage .species button{display:block;flex:0 0 auto!important;align-self:center;height:34px!important;min-height:34px!important;margin:0!important;border-color:#424b4a;background:#151819;color:#c6d0cc;border-radius:18px;padding:0 13px;font-size:12px;line-height:32px!important}
+#rankingPage .species button.selected{border-color:#15e6a9;background:#073c2d;color:#18e7aa}
+#rankingPage .rank{min-height:76px;margin:0 0 10px;padding:13px 14px;border:0;border-radius:18px;background:#1c1f20;color:#fff}
+#rankingPage .rank>span{width:28px;color:#fff;font-size:17px}
+#rankingPage .rank-photo{width:44px;height:44px;border-radius:50%;background:#36413e;font-size:24px}
+#rankingPage .rank b{font-size:16px;color:#fff}
+#rankingPage .rank p{margin-top:4px;color:#a8b3b0}
+#rankingPage .rank em{font-size:13px;color:#18e7aa}
+#rankingPage .rank.me{background:#123f34;box-shadow:inset 0 0 0 1px #16b98b}
+#rankingPage .rank:first-of-type{background:linear-gradient(100deg,#074a36,#13db9a);color:#fff}
+#rankingPage .rank:first-of-type p,#rankingPage .rank:first-of-type em{color:#e0fff5}
+#rankingPage .ranking-empty{border-color:#3d5650;background:#111716;color:#a8c0b8}
+#rankingPage .guest-empty{border-color:#386258;background:#102420;color:#b6d7cc}
+#app:has(#rankingPage.active) .bottom-nav{background:#17191a;box-shadow:0 -3px 12px #0008}
+#app:has(#rankingPage.active) .bottom-nav button{color:#aab6b2}
+#app:has(#rankingPage.active) .bottom-nav .active{color:#18e7aa}
