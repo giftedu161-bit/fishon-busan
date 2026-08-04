@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#061f36" />
     <title>물고기 몇 미터까지 잡을 수 있어? — 베타</title>
-    <link rel="stylesheet" href="styles.css?v=9" />
+    <link rel="stylesheet" href="styles.css?v=10" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   </head>
   <body>
@@ -103,7 +103,9 @@
 
       <section class="page detail-page" id="friendsPage">
         <div class="detail-title"><button class="back" data-go="settings">‹</button><h2>친구</h2></div>
-        <div class="empty-state"><span>🎣</span><b>아직 친구가 없어요</b><p>친구와 함께 부산 바다 기록을 공유하고<br>랭킹 경쟁을 시작해 보세요.</p><button class="soft-primary">친구 초대하기</button></div>
+        <section class="friend-code-card"><span>FISHON FRIEND CODE</span><b id="friendCode">FISH-0000</b><button id="copyFriendCode">코드 복사</button><small>친구에게 이 코드를 보내면 서로를 추가할 수 있어요.</small></section>
+        <section class="add-friend-card"><b>친구 코드 입력</b><div><input id="friendCodeInput" maxlength="12" placeholder="예: FISH-8K2M" /><button id="addFriendButton">추가</button></div></section>
+        <div class="empty-state friends-empty"><span>🎣</span><b>아직 친구가 없어요</b><p>친구와 함께 부산 바다 기록을 공유하고<br>랭킹 경쟁을 시작해 보세요.</p><button class="soft-primary" id="shareFriendCode">친구 초대하기</button></div>
       </section>
 
       <section class="page detail-page" id="notificationsPage">
