@@ -85,7 +85,12 @@ window.addEventListener('load', () => {
   analyzeButton.onclick = async () => {
     const image = document.querySelector('#analysisImage');
     if (!image?.src) { window.toast?.('먼저 물고기 사진을 촬영하거나 선택해주세요.'); return; }
-    const result = await window.analyzeBusanPhotoFeatures(image);
+    let result;
+    try {
+      const apiResult = await window.fishonAi?.analyze(image);
+      if (apiResult?.status === 'ready' && apiResult.species) result = { name: apiResult.species, confidence: `${Math.round((apiResult.confidence || 0) * 100)}%`, note: 'AI Hub EfficientDet 모델 분석 결과' };
+    } catch (error) { console.info('AI 서버 연결 실패, 베타 분석으로 전환', error); }
+    result = result || await window.analyzeBusanPhotoFeatures(image);
     window.renderBusanSpeciesCandidates(result.name, result.confidence, result.note);
     window.show?.('analysis');
     window.toast?.(`${result.name} 후보를 분석했어요.`);
