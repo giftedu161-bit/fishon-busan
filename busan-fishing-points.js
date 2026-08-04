@@ -33,10 +33,17 @@ window.addEventListener('load', () => {
     const userName = user?.isAnonymous ? '게스트 사용자' : (localStorage.getItem('fishon-nickname') || user?.displayName || user?.email?.split('@')[0] || '부산 낚시꾼');
     try {
       if (!window.fishonData || !user) { window.toast?.('로그인 상태를 확인해주세요.'); return; }
-      await window.fishonData.saveCatch({ userId: user.uid, userName, species, lengthCm, area: selectedPoint.name, pointId: selectedPoint.id, verified: true, verificationSource: 'photo-and-measurement', clientCreatedAt: Date.now() });
-      window.show?.('ranking');
-      await window.renderLiveRanking?.();
-      window.toast?.('검증 사진 조건으로 등록되었어요');
+      const isPrivate = Boolean(user.isAnonymous);
+      await window.fishonData.saveCatch({ userId: user.uid, userName, species, lengthCm, area: selectedPoint.name, pointId: selectedPoint.id, isPrivate, verified: true, verificationSource: 'photo-and-measurement', clientCreatedAt: Date.now() });
+      if (isPrivate) {
+        window.show?.('records');
+        await window.renderMyRecords?.();
+        window.toast?.('게스트 개인 기록으로 저장했어요. 나만 볼 수 있어요.');
+      } else {
+        window.show?.('ranking');
+        await window.renderLiveRanking?.();
+        window.toast?.('검증 사진 조건으로 등록되었어요');
+      }
     } catch (error) {
       console.error('기록 저장 실패', error);
       window.toast?.(error?.code === 'permission-denied' ? '저장 권한이 없어요. 다시 로그인해주세요.' : `기록 저장 실패: ${error?.message || '네트워크를 확인해주세요.'}`);

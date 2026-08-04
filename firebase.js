@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js';
 import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signInAnonymously, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
-import { getFirestore, addDoc, collection, doc, getDocs, limit, orderBy, query, serverTimestamp, setDoc } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
+import { getFirestore, addDoc, collection, doc, getDocs, limit, orderBy, query, serverTimestamp, setDoc, where } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
 
 const config = window.FISHON_FIREBASE_CONFIG;
 const guestSessionKey = 'fishon-active-guest-session';
@@ -55,7 +55,8 @@ if (config) {
       }, { merge: true });
     },
     async saveCatch(catchData) { return addDoc(collection(db, 'catches'), { ...catchData, createdAt: serverTimestamp() }); },
-    async loadRanking() { const snap = await getDocs(query(collection(db, 'catches'), orderBy('lengthCm', 'desc'), limit(50))); return snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); }
+    async loadRanking() { const snap = await getDocs(query(collection(db, 'catches'), where('isPrivate', '==', false), orderBy('lengthCm', 'desc'), limit(50))); return snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); },
+    async loadMyRecords(userId) { const snap = await getDocs(query(collection(db, 'catches'), where('userId', '==', userId), limit(100))); return snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); }
   };
   onAuthStateChanged(auth, async user => {
     // 익명 계정은 현재 브라우저 탭에서만 유지한다. 탭을 닫고 다시 열면 새 게스트로 시작한다.
