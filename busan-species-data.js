@@ -35,6 +35,22 @@ window.renderBusanSpeciesCandidates = function (primaryName = '감성돔', score
 
 window.addEventListener('DOMContentLoaded', () => window.renderBusanSpeciesCandidates());
 
+window.addEventListener('DOMContentLoaded', () => {
+  const grid = document.querySelector('#collectionPage .collection-grid');
+  if (!grid) return;
+  const collection = [
+    ['감성돔', '🐟', '42.8 cm', true], ['우럭', '🐠', '31.2 cm', true], ['복어', '🐡', '18.4 cm', true],
+    ['참돔', '🐟', '?', false], ['광어', '🐟', '?', false], ['농어', '🐟', '?', false],
+    ['숭어', '🐟', '?', false], ['고등어', '🐟', '?', false], ['전갱이', '🐠', '?', false],
+    ['붕장어', '🐍', '?', false], ['돌돔', '🐟', '?', false], ['벵에돔', '🐟', '?', false],
+    ['볼락', '🐠', '?', false], ['망상어', '🐟', '?', false], ['학공치', '🐟', '?', false],
+    ['삼치', '🐟', '?', false], ['갈치', '🐟', '?', false], ['도다리', '🐟', '?', false],
+    ['쥐노래미', '🐠', '?', false], ['성대', '🐟', '?', false], ['쭈꾸미', '🐙', '?', false],
+    ['문어', '🐙', '?', false], ['갑오징어', '🦑', '?', false], ['해삼', '🪸', '?', false], ['성게', '🦔', '?', false]
+  ];
+  grid.innerHTML = collection.map(([name, icon, size, found]) => `<article class="fish-card${found ? ' found' : ''}"><span>${icon}</span><b>${name}</b><strong>${size.includes(' ') ? size.replace(' ', ' <small>') + '</small>' : size}</strong><i></i></article>`).join('');
+});
+
 window.analyzeBusanPhotoFeatures = async function (image) {
   await image.decode?.().catch(() => {});
   const canvas = document.createElement('canvas');
