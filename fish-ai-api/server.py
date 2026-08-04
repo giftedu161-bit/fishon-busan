@@ -1,17 +1,87 @@
+import sys
 from pathlib import Path
+
+import cv2
+import numpy as np
+import torch
+import yaml
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 MODEL_ROOT = Path(__file__).resolve().parent.parent / "fish-ai-model"
 WEIGHTS = MODEL_ROOT / "trained_weight" / "20210222_efficientdet-d2_29_203900.pth"
-LABELS = ["광어", "우럭", "참돔", "감성돔", "돌돔"]
+KOREAN_LABELS = ["광어", "우럭", "참돔", "감성돔", "돌돔"]
+INPUT_SIZE = 768  # EfficientDet-D2
+
+sys.path.insert(0, str(MODEL_ROOT))
+_model = None
+_runtime_error = None
 
 app = FastAPI(title="FishOn Busan AI")
-app.add_middleware(CORSMiddleware, allow_origins=["https://giftedu161-bit.github.io", "http://localhost:8000"], allow_methods=["POST", "GET"], allow_headers=["*"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://giftedu161-bit.github.io", "http://localhost:8000"],
+    allow_methods=["POST", "GET"],
+    allow_headers=["*"],
+)
+
+
+def load_model():
+    global _model, _runtime_error
+    if _model is not None:
+        return _model
+    if _runtime_error:
+        raise RuntimeError(_runtime_error)
+    try:
+        from efficientdet.backbone import EfficientDetBackbone
+
+        params = yaml.safe_load((MODEL_ROOT / "projects" / "fish_77.yml").read_text(encoding="utf-8"))
+        model = EfficientDetBackbone(
+            num_classes=len(params["obj_list"]),
+            compound_coef=2,
+            ratios=eval(params["anchors_ratios"]),
+            scales=eval(params["anchors_scales"]),
+        )
+        checkpoint = torch.load(WEIGHTS, map_location="cpu", weights_only=False)
+        target_keys = set(model.state_dict())
+        compatible = {}
+        for key, value in checkpoint.items():
+            normalized = key.replace(".conv.", ".")
+            compatible[normalized if normalized in target_keys else key] = value
+        loaded = model.load_state_dict(compatible, strict=False)
+        if loaded.missing_keys or loaded.unexpected_keys:
+            raise RuntimeError("학습 가중치를 모델 구조에 완전히 연결하지 못했습니다.")
+        model.eval()
+        _model = model
+        return _model
+    except Exception as error:
+        _runtime_error = str(error)
+        raise
+
+
+def prepare_image(payload: bytes):
+    image = cv2.imdecode(np.frombuffer(payload, np.uint8), cv2.IMREAD_COLOR)
+    if image is None:
+        raise ValueError("사진 파일을 읽을 수 없습니다.")
+    rgb = image[..., ::-1]
+    normalized = (rgb / 255.0 - np.array([0.485, 0.456, 0.406])) / np.array([0.229, 0.224, 0.225])
+    height, width = normalized.shape[:2]
+    scale = min(INPUT_SIZE / height, INPUT_SIZE / width)
+    resized = cv2.resize(normalized, (round(width * scale), round(height * scale)))
+    framed = np.zeros((INPUT_SIZE, INPUT_SIZE, 3), np.float32)
+    framed[: resized.shape[0], : resized.shape[1]] = resized
+    tensor = torch.from_numpy(framed).unsqueeze(0).permute(0, 3, 1, 2).float()
+    return tensor
+
 
 @app.get("/health")
 def health():
-    return {"ready": WEIGHTS.exists(), "model": "EfficientDet-D2", "species": LABELS}
+    try:
+        load_model()
+        return {"ready": True, "model": "EfficientDet-D2", "species": KOREAN_LABELS, "device": "CPU"}
+    except Exception as error:
+        return {"ready": False, "model": "EfficientDet-D2", "species": KOREAN_LABELS, "error": str(error)}
+
 
 @app.post("/analyze")
 async def analyze(image: UploadFile = File(...)):
@@ -22,6 +92,30 @@ async def analyze(image: UploadFile = File(...)):
     payload = await image.read()
     if len(payload) > 12 * 1024 * 1024:
         raise HTTPException(413, "사진은 12MB 이하로 올려주세요.")
-    # The official EfficientDet inference adapter is loaded in the next runtime step.
-    # Keep the API contract stable for the web client.
-    return {"status": "model-runtime-pending", "species": None, "confidence": 0, "message": "GPU 모델 런타임을 시작하면 실제 분석이 활성화됩니다."}
+    try:
+        from efficientdet.utils import BBoxTransform, ClipBoxes
+        from utils.utils import postprocess_with_KP
+
+        model = load_model()
+        tensor = prepare_image(payload)
+        with torch.no_grad():
+            _, regression, classification, anchors, regression_kp = model(tensor)
+            predictions = postprocess_with_KP(
+                tensor, anchors, regression, regression_kp, classification,
+                BBoxTransform(), ClipBoxes(), 0.20, 0.20,
+            )[0]
+        if len(predictions.get("scores", [])) == 0:
+            return {"status": "ready", "species": None, "confidence": 0, "message": "물고기를 찾지 못했습니다. 물고기가 잘 보이게 다시 촬영해주세요."}
+        best_index = int(np.argmax(predictions["scores"]))
+        class_id = int(predictions["class_ids"][best_index])
+        confidence = float(predictions["scores"][best_index])
+        return {
+            "status": "ready",
+            "species": KOREAN_LABELS[class_id] if 0 <= class_id < len(KOREAN_LABELS) else None,
+            "confidence": confidence,
+            "message": "AI Hub 학습 모델 분석 결과입니다.",
+        }
+    except ValueError as error:
+        raise HTTPException(400, str(error))
+    except Exception as error:
+        raise HTTPException(503, f"AI 모델 분석을 시작하지 못했습니다: {error}")

@@ -1,0 +1,6 @@
+fish-ai-api/.venv/
+fish-ai-model/trained_weight/
+model-inspect/
+fish-ai-api/__pycache__/
+fish-ai-model/**/__pycache__/
+*.pyc
