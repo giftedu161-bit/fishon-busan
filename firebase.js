@@ -55,7 +55,7 @@ if (config) {
       }, { merge: true });
     },
     async saveCatch(catchData) { return addDoc(collection(db, 'catches'), { ...catchData, createdAt: serverTimestamp() }); },
-    async loadRanking() { const snap = await getDocs(query(collection(db, 'catches'), where('isPrivate', '==', false), limit(100))); return snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); },
+    async loadRanking() { const snap = await getDocs(query(collection(db, 'catches'), limit(100))); return snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); },
     async loadMyRecords(userId) { const snap = await getDocs(query(collection(db, 'catches'), where('userId', '==', userId), limit(100))); return snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); }
   };
   onAuthStateChanged(auth, async user => {
