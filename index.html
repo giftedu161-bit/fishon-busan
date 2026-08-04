@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#061f36" />
     <title>물고기 몇 미터까지 잡을 수 있어? — 베타</title>
-    <link rel="stylesheet" href="styles.css?v=20" />
+    <link rel="stylesheet" href="styles.css?v=21" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   </head>
   <body>
@@ -42,8 +42,8 @@
           <video id="camera" autoplay playsinline muted></video><img id="preview" alt="촬영한 물고기 사진" />
           <div class="camera-empty" id="cameraEmpty"><span>▧</span><b>물고기와 측정매트를<br>한 화면에 담아주세요</b><small>눈금 · QR 인증카드가 보여야 공식 랭킹에 반영됩니다</small></div>
         </div>
-        <div class="camera-actions"><button class="secondary" id="galleryButton">갤러리</button><button class="shutter" id="shutter" aria-label="촬영"></button><button class="secondary" id="flipCamera">카메라 전환</button></div>
-        <input id="fileInput" type="file" accept="image/*" capture="environment" hidden />
+        <div class="camera-actions"><label class="secondary gallery-label" for="fileInput">사진 선택</label><button class="shutter" id="shutter" aria-label="촬영"></button><button class="secondary" id="flipCamera">카메라 전환</button></div>
+        <input id="fileInput" type="file" accept="image/*" capture="environment" />
         <button class="primary disabled" id="analyzeButton" disabled>사진 분석하기</button>
         <p class="privacy">공식 랭킹 인증을 위해 촬영 시간과 부산 해역 여부만 확인합니다.</p>
       </section>
@@ -125,6 +125,6 @@
 
       <nav class="bottom-nav"><button class="active" data-go="home"><span>⌂</span>홈</button><button data-go="map"><span>⌖</span>지도</button><button data-go="capture" class="nav-catch"><span>＋</span></button><button data-go="mission"><span>◎</span>미션</button><button data-go="collection"><span>▧</span>도감</button></nav>
     </main>
-    <div class="toast" id="toast"></div><script src="firebase-config.js"></script><script src="busan-species-data.js?v=19"></script><script type="module" src="firebase.js?v=14"></script><script src="app.js?v=16"></script><script src="busan-fishing-points.js?v=13"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script src="openstreet-map.js?v=13"></script>
+    <div class="toast" id="toast"></div><script src="firebase-config.js"></script><script src="busan-species-data.js?v=19"></script><script type="module" src="firebase.js?v=14"></script><script src="app.js?v=21"></script><script src="busan-fishing-points.js?v=13"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script src="openstreet-map.js?v=13"></script>
   </body>
 </html>
