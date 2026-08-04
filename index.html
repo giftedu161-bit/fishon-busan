@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <style>.busan-db-panel{display:none;margin:0 0 18px;padding:16px;border:1px solid #b8e2dc;border-radius:18px;background:linear-gradient(135deg,#e9f8f4,#f8fffd)}.db-panel-head{display:grid;grid-template-columns:1fr auto;gap:3px;margin-bottom:13px}.db-panel-head span{grid-column:1/-1;font-size:10px;font-weight:800;letter-spacing:1px;color:#117d76}.db-panel-head b{font-size:15px}.db-panel-head em{font-size:10px;font-style:normal;color:#46777a}.db-main{display:flex;align-items:center;gap:10px;background:#fff;border-radius:13px;padding:12px}.db-icon{font-size:31px}.db-main div{margin-right:auto}.db-main strong{display:block;font-size:17px}.db-main p,.db-note{font-size:10px;color:#607d80;margin:4px 0 0}.db-main>b{font-size:17px;color:#11836d}.db-candidates{display:flex;gap:7px;margin-top:10px;overflow:auto}.db-candidates button{border:1px solid #c4e4df;border-radius:12px;background:#fff;padding:8px 10px;white-space:nowrap;font-size:11px;color:#365d61}.db-candidates button b{color:#13816c}.db-note{line-height:1.45;margin-top:10px}</style>
     <main class="app" id="app">
       <section class="page active splash" id="splashPage" data-go="login"><div class="splash-content"><p class="eyebrow">BUSAN SEA CATCH</p><h1>고기 몇 미터까지 잡을 수 있어?</h1><p>부산 바다에서 남기는 가장 정확한 기록</p></div><div class="splash-fish">🐟</div><div class="tap-start">화면을 터치해 시작하기 ›</div></section>
       <section class="page auth-page" id="loginPage"><button class="back" data-go="splash">‹</button><div class="auth-logo">🐟</div><p class="eyebrow">WELCOME TO FISHON</p><h2>부산 바다의 기록을<br>시작해볼까요?</h2><p class="auth-copy">조과 인증부터 랭킹, 미션까지<br>피쉬온과 함께하세요.</p><button class="social kakao" id="loginButton">💬 카카오로 계속하기</button><button class="social google" id="googleLogin">G&nbsp;&nbsp;Google로 계속하기</button><button class="social guest" id="guestLogin">◌&nbsp;&nbsp;게스트로 시작하기</button><button class="social email" id="emailLogin">이메일로 로그인</button><button class="social email" data-go="signup">이메일로 회원가입</button></section>
@@ -51,6 +52,7 @@
         <button class="primary" id="submitRecord">공식 기록으로 제출</button>
       </section>
 
+      <section class="busan-db-panel" id="busanDbPanel"><div class="db-panel-head"><span>BUSAN SPECIES DB</span><b>부산 해양생물 후보 분석</b><em id="dbSpeciesCount">12종 기준</em></div><div class="db-main"><span class="db-icon">🐟</span><div><strong id="dbPrimarySpecies">감성돔</strong><p id="dbPrimaryMeta">암초 · 해조류 · 수심 50m 이내</p></div><b id="dbPrimaryScore">96%</b></div><div class="db-candidates" id="dbCandidates"></div><p class="db-note">사진 형태·촬영 해역·계절 정보를 함께 비교한 후보 결과입니다.</p></section>
       <section class="page" id="rankingPage">
         <div class="page-head"><div><p class="eyebrow">BUSAN SEA RANKING</p><h2>부산 랭킹</h2></div><button class="location">⌖ 부산 전 해역</button></div>
         <div class="tabs" id="periodTabs"><button class="selected">일간</button><button>주간</button><button>월간</button><button>역대</button></div>

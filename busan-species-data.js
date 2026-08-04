@@ -19,3 +19,17 @@ window.findBusanSpecies = function (name) {
   const key = String(name || '').replace(/\s/g, '');
   return window.BUSAN_SPECIES_DATA.find(item => item.name.replace(/\([^)]*\)/g, '').replace(/\s/g, '') === key) || null;
 };
+
+window.renderBusanSpeciesCandidates = function (primaryName = '감성돔') {
+  const primary = window.findBusanSpecies(primaryName) || window.BUSAN_SPECIES_DATA[0];
+  const alternatives = window.BUSAN_SPECIES_DATA.filter(item => item.id !== primary.id).slice(0, 3);
+  const panel = document.querySelector('#busanDbPanel');
+  if (!panel) return;
+  document.querySelector('#dbSpeciesCount').textContent = `${window.BUSAN_SPECIES_DATA.length}종 기준`;
+  document.querySelector('#dbPrimarySpecies').textContent = primary.name;
+  document.querySelector('#dbPrimaryMeta').textContent = `${primary.habitats.join(' · ')} · ${primary.seasons.join(' · ')}`;
+  document.querySelector('#dbPrimaryScore').textContent = primary.confidence === 'high' ? '96%' : '88%';
+  document.querySelector('#dbCandidates').innerHTML = alternatives.map((item, index) => `<button type="button">후보 ${index + 2} <b>${item.name}</b> · ${82 - index * 5}%</button>`).join('');
+};
+
+window.addEventListener('DOMContentLoaded', () => window.renderBusanSpeciesCandidates());
