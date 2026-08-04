@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js';
-import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
+import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signInAnonymously, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
 import { getFirestore, addDoc, collection, doc, getDocs, limit, orderBy, query, serverTimestamp, setDoc } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
 
 const config = window.FISHON_FIREBASE_CONFIG;
@@ -37,6 +37,7 @@ if (config) {
   window.fishonData = {
     async signInGoogle() { return signInWithPopup(auth, new GoogleAuthProvider()); },
     async signInGuest() { return signInAnonymously(auth); },
+    async startFreshGuest() { if (auth.currentUser?.isAnonymous) await signOut(auth); return signInAnonymously(auth); },
     async signUpWithEmail(email, password) { return createUserWithEmailAndPassword(auth, email, password); },
     async signInWithEmail(email, password) { return signInWithEmailAndPassword(auth, email, password); },
     async saveUserProfile(user, profile = {}) {
