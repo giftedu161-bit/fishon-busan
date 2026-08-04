@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#061f36" />
     <title>물고기 몇 미터까지 잡을 수 있어? — 베타</title>
-    <link rel="stylesheet" href="styles.css?v=8" />
+    <link rel="stylesheet" href="styles.css?v=9" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   </head>
   <body>
@@ -82,15 +82,34 @@
         <button class="profile-entry" data-go="profile"><span class="profile-entry-avatar">👤</span><span><b>내 정보</b><em id="settingsAccountHint">로그인 정보를 확인하세요</em></span><strong>관리</strong></button>
         <section class="settings-menu">
           <button class="settings-row" data-go="profile"><span>♙</span><b>계정</b><em>›</em></button>
-          <button class="settings-row"><span>♙</span><b>개인정보 · 보안</b><em>›</em></button>
-          <button class="settings-row"><span>♧</span><b>친구</b><em>›</em></button>
-          <button class="settings-row"><span>♧</span><b>알림</b><em>›</em></button>
+          <button class="settings-row" data-go="privacy"><span>♙</span><b>개인정보 · 보안</b><em>›</em></button>
+          <button class="settings-row" data-go="friends"><span>♧</span><b>친구</b><em>›</em></button>
+          <button class="settings-row" data-go="notifications"><span>♧</span><b>알림</b><em>›</em></button>
         </section>
         <section class="settings-menu settings-preference">
           <div class="settings-row setting-row-static"><span>☝</span><b>조작 손</b><div class="choice-row compact" id="handChoice"><button class="selected" data-hand="right">오른손</button><button data-hand="left">왼손</button></div></div>
           <div class="settings-row setting-row-static"><span>Ａ</span><b>글꼴</b><div class="choice-row compact" id="fontChoice"><button class="selected" data-font="sans">고딕</button><button data-font="serif">명조</button><button data-font="round">둥근</button></div></div>
           <div class="settings-row setting-row-static"><span>⌖</span><b>정확한 위치 비공개</b><label class="settings-toggle"><input type="checkbox" checked /><i></i></label></div>
         </section>
+      </section>
+
+      <section class="page detail-page" id="privacyPage">
+        <div class="detail-title"><button class="back" data-go="settings">‹</button><h2>개인정보 · 보안</h2></div>
+        <p class="detail-intro">내 기록을 안전하게 관리하고, 랭킹에 공개할 범위를 정할 수 있어요.</p>
+        <section class="detail-group"><p>랭킹 공개 설정</p><div class="detail-toggle-row"><span><b>정확한 낚시 위치 비공개</b><small>랭킹에는 부산 권역만 표시돼요.</small></span><label class="settings-toggle"><input type="checkbox" checked /><i></i></label></div><div class="detail-toggle-row"><span><b>프로필 기록 공개</b><small>다른 사용자가 내 어종 도감을 볼 수 있어요.</small></span><label class="settings-toggle"><input type="checkbox" checked /><i></i></label></div></section>
+        <section class="detail-group"><p>사진 및 데이터</p><div class="detail-link-row"><span><b>사진 분석 기록</b><small>인증 사진과 AI 분석 결과를 관리해요.</small></span><em>›</em></div><div class="detail-link-row"><span><b>개인정보 처리 안내</b><small>수집 항목과 보관 방법을 확인하세요.</small></span><em>›</em></div></section>
+        <button class="danger-link">계정 데이터 삭제 요청</button>
+      </section>
+
+      <section class="page detail-page" id="friendsPage">
+        <div class="detail-title"><button class="back" data-go="settings">‹</button><h2>친구</h2></div>
+        <div class="empty-state"><span>🎣</span><b>아직 친구가 없어요</b><p>친구와 함께 부산 바다 기록을 공유하고<br>랭킹 경쟁을 시작해 보세요.</p><button class="soft-primary">친구 초대하기</button></div>
+      </section>
+
+      <section class="page detail-page" id="notificationsPage">
+        <div class="detail-title"><button class="back" data-go="settings">‹</button><h2>알림</h2></div>
+        <div class="empty-state"><span>✓</span><b>알림을 모두 확인했습니다</b><p>새로운 랭킹, 미션, 포인트 소식이 생기면<br>여기에 알려드릴게요.</p></div>
+        <section class="detail-group notification-options"><p>알림 설정</p><div class="detail-toggle-row"><span><b>랭킹 변동</b><small>내 순위가 바뀌면 알려드려요.</small></span><label class="settings-toggle"><input type="checkbox" checked /><i></i></label></div><div class="detail-toggle-row"><span><b>미션 및 포인트</b><small>새 미션과 지급 소식을 알려드려요.</small></span><label class="settings-toggle"><input type="checkbox" checked /><i></i></label></div></section>
       </section>
 
       <section class="page" id="profilePage">
