@@ -38,6 +38,7 @@ if (config) {
     async signInGoogle() { return signInWithPopup(auth, new GoogleAuthProvider()); },
     async signInGuest() { return signInAnonymously(auth); },
     async startFreshGuest() { if (auth.currentUser?.isAnonymous) await signOut(auth); return signInAnonymously(auth); },
+    async signOut() { return signOut(auth); },
     async signUpWithEmail(email, password) { return createUserWithEmailAndPassword(auth, email, password); },
     async signInWithEmail(email, password) { return signInWithEmailAndPassword(auth, email, password); },
     async saveUserProfile(user, profile = {}) {

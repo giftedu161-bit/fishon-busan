@@ -38,7 +38,8 @@ window.addEventListener('load', () => {
       await window.renderLiveRanking?.();
       window.toast?.('검증 사진 조건으로 등록되었어요');
     } catch (error) {
-      window.toast?.('기록 저장에 실패했어요');
+      console.error('기록 저장 실패', error);
+      window.toast?.(error?.code === 'permission-denied' ? '저장 권한이 없어요. 다시 로그인해주세요.' : `기록 저장 실패: ${error?.message || '네트워크를 확인해주세요.'}`);
     }
   };
 });
