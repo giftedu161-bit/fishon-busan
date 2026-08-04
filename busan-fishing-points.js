@@ -33,7 +33,7 @@ window.addEventListener('load', () => {
     const userName = user?.isAnonymous ? '게스트 사용자' : (localStorage.getItem('fishon-nickname') || user?.displayName || user?.email?.split('@')[0] || '부산 낚시꾼');
     try {
       if (!window.fishonData || !user) { window.toast?.('로그인 상태를 확인해주세요.'); return; }
-      await window.fishonData.saveCatch({ userId: user.uid, userName, species, lengthCm, area: selectedPoint.name, pointId: selectedPoint.id, verified: true, verificationSource: 'photo-and-measurement' });
+      await window.fishonData.saveCatch({ userId: user.uid, userName, species, lengthCm, area: selectedPoint.name, pointId: selectedPoint.id, verified: true, verificationSource: 'photo-and-measurement', clientCreatedAt: Date.now() });
       window.show?.('ranking');
       await window.renderLiveRanking?.();
       window.toast?.('검증 사진 조건으로 등록되었어요');
