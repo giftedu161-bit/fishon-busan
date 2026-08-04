@@ -20,7 +20,7 @@ window.findBusanSpecies = function (name) {
   return window.BUSAN_SPECIES_DATA.find(item => item.name.replace(/\([^)]*\)/g, '').replace(/\s/g, '') === key) || null;
 };
 
-window.renderBusanSpeciesCandidates = function (primaryName = '감성돔') {
+window.renderBusanSpeciesCandidates = function (primaryName = '감성돔', score = null, note = null) {
   const primary = window.findBusanSpecies(primaryName) || window.BUSAN_SPECIES_DATA[0];
   const alternatives = window.BUSAN_SPECIES_DATA.filter(item => item.id !== primary.id).slice(0, 3);
   const panel = document.querySelector('#busanDbPanel');
@@ -28,8 +28,46 @@ window.renderBusanSpeciesCandidates = function (primaryName = '감성돔') {
   document.querySelector('#dbSpeciesCount').textContent = `${window.BUSAN_SPECIES_DATA.length}종 기준`;
   document.querySelector('#dbPrimarySpecies').textContent = primary.name;
   document.querySelector('#dbPrimaryMeta').textContent = `${primary.habitats.join(' · ')} · ${primary.seasons.join(' · ')}`;
-  document.querySelector('#dbPrimaryScore').textContent = primary.confidence === 'high' ? '96%' : '88%';
+  document.querySelector('#dbPrimaryScore').textContent = score || (primary.confidence === 'high' ? '96%' : '88%');
   document.querySelector('#dbCandidates').innerHTML = alternatives.map((item, index) => `<button type="button">후보 ${index + 2} <b>${item.name}</b> · ${82 - index * 5}%</button>`).join('');
+  if (note) panel.querySelector('.db-note').textContent = note;
 };
 
 window.addEventListener('DOMContentLoaded', () => window.renderBusanSpeciesCandidates());
+
+window.analyzeBusanPhotoFeatures = async function (image) {
+  await image.decode?.().catch(() => {});
+  const canvas = document.createElement('canvas');
+  canvas.width = 64; canvas.height = 64;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  context.drawImage(image, 0, 0, 64, 64);
+  const pixels = context.getImageData(0, 0, 64, 64).data;
+  let red = 0, green = 0, blue = 0, brightness = 0, saturation = 0;
+  for (let i = 0; i < pixels.length; i += 4) {
+    const r = pixels[i], g = pixels[i + 1], b = pixels[i + 2];
+    red += r; green += g; blue += b; brightness += (r + g + b) / 3;
+    saturation += Math.max(r, g, b) - Math.min(r, g, b);
+  }
+  const count = pixels.length / 4;
+  red /= count; green /= count; blue /= count; brightness /= count; saturation /= count;
+  let name = '감성돔';
+  if (blue > red + 12 && saturation > 48) name = '고등어';
+  else if (red > blue + 15 && brightness < 150) name = '조피볼락(우럭)';
+  else if (brightness > 168 && saturation < 44) name = '숭어';
+  else if (brightness < 108) name = '붕장어';
+  const confidence = `${Math.max(58, Math.min(82, Math.round(62 + Math.abs(red - blue) / 4 + saturation / 13)))}%`;
+  return { name, confidence, note: `사진 특징 기반 베타 분석 · 밝기 ${Math.round(brightness)} · 색상 대비 ${Math.round(saturation)}. 측정매트·어종 특징을 함께 확인해주세요.` };
+};
+
+window.addEventListener('load', () => {
+  const analyzeButton = document.querySelector('#analyzeButton');
+  if (!analyzeButton) return;
+  analyzeButton.onclick = async () => {
+    const image = document.querySelector('#analysisImage');
+    if (!image?.src) { window.toast?.('먼저 물고기 사진을 촬영하거나 선택해주세요.'); return; }
+    const result = await window.analyzeBusanPhotoFeatures(image);
+    window.renderBusanSpeciesCandidates(result.name, result.confidence, result.note);
+    window.show?.('analysis');
+    window.toast?.(`${result.name} 후보를 분석했어요.`);
+  };
+});
