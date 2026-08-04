@@ -36,6 +36,7 @@ window.addEventListener('load', () => {
       const isPrivate = Boolean(user.isAnonymous);
       const savedCatch = { userId: user.uid, userName, species, lengthCm, area: selectedPoint.name, pointId: selectedPoint.id, isPrivate, verified: true, verificationSource: 'photo-and-measurement', clientCreatedAt: Date.now() };
       await window.fishonData.saveCatch(savedCatch);
+      window.fishonLatestCatch = savedCatch;
       if (isPrivate) {
         window.show?.('records');
         await window.renderMyRecords?.();
