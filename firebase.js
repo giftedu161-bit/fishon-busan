@@ -56,6 +56,7 @@ if (config) {
   };
   onAuthStateChanged(auth, async user => {
     window.fishonUser = user;
+    window.dispatchEvent(new CustomEvent('fishon-auth-change', { detail: { user } }));
     if (user) {
       try { await window.fishonData.saveUserProfile(user); }
       catch (error) { console.warn('프로필 저장 실패', error); }
