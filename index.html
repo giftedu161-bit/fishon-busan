@@ -78,13 +78,20 @@
       <section class="page" id="missionPage"><div class="page-head"><div><p class="eyebrow">CATCH &amp; EARN</p><h2>오늘의 미션</h2></div><span class="mission-score">240 P</span></div><div class="mission-hero">🎣 <div><p>8월 첫째 주 챌린지</p><h3>부산 바다를 기록하세요</h3><small>3개 미션 완료 시 보너스 300P</small></div></div><article class="mission done"><span>✓</span><div><b>첫 조과 인증하기</b><p>공식 인증 사진을 등록하세요</p></div><strong>+120P</strong></article><article class="mission"><span>2</span><div><b>부산 해역 한 곳 탐방</b><p>지도에서 낚시 포인트를 확인하세요</p></div><strong>+60P</strong></article><article class="mission"><span>3</span><div><b>어종 도감 3종 채우기</b><p>새로운 어종을 기록해보세요</p></div><strong>+120P</strong></article></section>
       <section class="page" id="mapPage"><div class="page-head"><div><p class="eyebrow">BUSAN FISHING MAP</p><h2>낚시 지도</h2></div><button class="location">⌖ 내 위치</button></div><div class="map-card google-map"><div class="map-legend">● 피쉬온 포인트 DB · OpenStreetMap</div></div><a class="banakpo-link" href="https://www.banakpo.co.kr/frame/webMain.do" target="_blank" rel="noopener">바낚포의 조과 기록도 함께 확인하기 <span>↗</span></a><h3 class="near-title">포인트 안내</h3><article class="spot">📍 <div><b>지도 마커를 눌러 위치 확인</b><p>현장 출입·낚시 가능 여부를 먼저 확인해 주세요.</p></div></article></section>
       <section class="page" id="collectionPage"><div class="page-head"><div><p class="eyebrow">BUSAN SEA COLLECTION</p><h2>물고기 도감</h2></div><span class="collection-count">3 / 48</span></div><div class="collection-progress"><i></i></div><p class="collection-copy">부산 바다에서 만난 물고기를 모아보세요.</p><div class="collection-grid"><article class="fish-card found">🐟<b>감성돔</b><small>최대 42.8cm</small></article><article class="fish-card found">🐠<b>우럭</b><small>최대 31.2cm</small></article><article class="fish-card found">🐡<b>복어</b><small>최대 18.4cm</small></article><article class="fish-card">?<b>미발견</b><small>부산 연안</small></article><article class="fish-card">?<b>미발견</b><small>부산 연안</small></article><article class="fish-card">?<b>미발견</b><small>부산 연안</small></article></div></section>
-      <section class="page" id="settingsPage">
-        <div class="page-head"><button class="back" data-go="home">‹</button><div><p class="eyebrow">PREFERENCES</p><h2>설정</h2></div></div>
-        <button class="profile-entry" data-go="profile"><span class="profile-entry-avatar">👤</span><span><small>ACCOUNT</small><b>내 정보</b><em id="settingsAccountHint">로그인 정보를 확인하세요</em></span><strong>›</strong></button>
-        <h3 class="setting-label">조작 손</h3><div class="choice-row" id="handChoice"><button class="selected" data-hand="right">오른손잡이</button><button data-hand="left">왼손잡이</button></div>
-        <p class="hint">왼손잡이 모드에서는 주요 버튼과 하단 메뉴가 왼쪽에 맞춰집니다.</p>
-        <h3 class="setting-label">글꼴</h3><div class="choice-row" id="fontChoice"><button class="selected" data-font="sans">기본 고딕</button><button data-font="serif">명조</button><button data-font="round">둥근 글꼴</button></div>
-        <h3 class="setting-label">랭킹 개인정보</h3><div class="setting-switch"><span>정확한 위치 비공개</span><label><input type="checkbox" checked /><i></i></label></div>
+      <section class="page settings-list-page" id="settingsPage">
+        <div class="settings-title"><button class="back" data-go="home">‹</button><h2>설정</h2><button class="settings-search" aria-label="설정 검색">⌕</button></div>
+        <button class="profile-entry" data-go="profile"><span class="profile-entry-avatar">👤</span><span><b>내 정보</b><em id="settingsAccountHint">로그인 정보를 확인하세요</em></span><strong>관리</strong></button>
+        <section class="settings-menu">
+          <button class="settings-row" data-go="profile"><span>♙</span><b>계정</b><em>›</em></button>
+          <button class="settings-row"><span>♙</span><b>개인정보 · 보안</b><em>›</em></button>
+          <button class="settings-row"><span>♧</span><b>친구</b><em>›</em></button>
+          <button class="settings-row"><span>♧</span><b>알림</b><em>›</em></button>
+        </section>
+        <section class="settings-menu settings-preference">
+          <div class="settings-row setting-row-static"><span>☝</span><b>조작 손</b><div class="choice-row compact" id="handChoice"><button class="selected" data-hand="right">오른손</button><button data-hand="left">왼손</button></div></div>
+          <div class="settings-row setting-row-static"><span>Ａ</span><b>글꼴</b><div class="choice-row compact" id="fontChoice"><button class="selected" data-font="sans">고딕</button><button data-font="serif">명조</button><button data-font="round">둥근</button></div></div>
+          <div class="settings-row setting-row-static"><span>⌖</span><b>정확한 위치 비공개</b><label class="settings-toggle"><input type="checkbox" checked /><i></i></label></div>
+        </section>
       </section>
 
       <section class="page" id="profilePage">
