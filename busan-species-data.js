@@ -60,6 +60,10 @@ window.analyzeBusanPhotoFeatures = async function (image) {
 };
 
 window.addEventListener('load', () => {
+  const collectionProgress = document.querySelector('#collectionPage .collection-progress');
+  if (collectionProgress && !document.querySelector('.collection-visual')) {
+    collectionProgress.insertAdjacentHTML('beforebegin', `<article class="collection-visual"><img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80" alt="바다 물고기 디자인 사진" /><div class="collection-visual-copy"><span>BUSAN SEA FIELD GUIDE</span><b>부산 바다를<br>기록하는 도감</b><small>내가 인증한 조과 사진으로 도감을 채워보세요.</small></div><a class="collection-source" href="https://unsplash.com/s/photos/fish" target="_blank" rel="noopener">Photo · Unsplash ↗</a></article>`);
+  }
   const analyzeButton = document.querySelector('#analyzeButton');
   if (!analyzeButton) return;
   analyzeButton.onclick = async () => {
