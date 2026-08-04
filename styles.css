@@ -52,3 +52,27 @@
 #app:has(#rankingPage.active) .bottom-nav{background:#17191a;box-shadow:0 -3px 12px #0008}
 #app:has(#rankingPage.active) .bottom-nav button{color:#aab6b2}
 #app:has(#rankingPage.active) .bottom-nav .active{color:#18e7aa}
+
+/* 밝은 랭킹 버전: 어종 필터를 제목 바로 아래에 배치 */
+#rankingPage{background:#f8f9f8;color:#102536}
+#rankingPage .eyebrow{color:#568092}
+#rankingPage .page-head h2{color:#102536}
+#rankingPage .location{border-color:#b6d4d8;background:#e8f7f6;color:#097187}
+#rankingPage .species{margin:0 -2px 12px}
+#rankingPage .species button{border-color:#d2dedf;background:#fff;color:#557077}
+#rankingPage .species button.selected{border-color:#0d7389;background:#e0f6f4;color:#086477}
+#rankingPage .tabs{margin-bottom:16px;border-color:#dce3e3}
+#rankingPage .tabs button{color:#74868c}
+#rankingPage .tabs button.selected{color:#08718b;border-color:#08718b}
+#rankingPage .rank{background:#fff;color:#102536;border:1px solid #e1e9e8}
+#rankingPage .rank>span,#rankingPage .rank b{color:#173641}
+#rankingPage .rank p{color:#71848b}
+#rankingPage .rank em{color:#157a63}
+#rankingPage .rank.me{background:#e7f5f2;box-shadow:none;border-color:#cce8e2}
+#rankingPage .rank:first-of-type{background:linear-gradient(105deg,#e5f6f1,#f8fffd);color:#102536;border-color:#bfe4da}
+#rankingPage .rank:first-of-type p,#rankingPage .rank:first-of-type em{color:#157a63}
+#rankingPage .ranking-empty{border-color:#b8d9d4;background:#f2faf8;color:#4c7774}
+#rankingPage .guest-empty{border-color:#b7d8d3;background:#f3fbf9;color:#4d7776}
+#app:has(#rankingPage.active) .bottom-nav{background:#fff;box-shadow:0 -3px 14px #122d3712}
+#app:has(#rankingPage.active) .bottom-nav button{color:#789096}
+#app:has(#rankingPage.active) .bottom-nav .active{color:#08718b}
