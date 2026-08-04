@@ -34,15 +34,17 @@ window.addEventListener('load', () => {
     try {
       if (!window.fishonData || !user) { window.toast?.('로그인 상태를 확인해주세요.'); return; }
       const isPrivate = Boolean(user.isAnonymous);
-      await window.fishonData.saveCatch({ userId: user.uid, userName, species, lengthCm, area: selectedPoint.name, pointId: selectedPoint.id, isPrivate, verified: true, verificationSource: 'photo-and-measurement', clientCreatedAt: Date.now() });
+      const savedCatch = { userId: user.uid, userName, species, lengthCm, area: selectedPoint.name, pointId: selectedPoint.id, isPrivate, verified: true, verificationSource: 'photo-and-measurement', clientCreatedAt: Date.now() };
+      await window.fishonData.saveCatch(savedCatch);
       if (isPrivate) {
         window.show?.('records');
         await window.renderMyRecords?.();
         window.toast?.('게스트 개인 기록으로 저장했어요. 나만 볼 수 있어요.');
       } else {
+        window.fishonOptimisticRanking = [savedCatch, ...(window.fishonOptimisticRanking || [])];
         window.show?.('ranking');
-        await window.renderLiveRanking?.();
-        window.toast?.('검증 사진 조건으로 등록되었어요');
+        try { await window.renderLiveRanking?.(); } catch (error) { console.warn('랭킹 새로고침 실패', error); }
+        window.toast?.('부산 랭킹에 등록되었어요!');
       }
     } catch (error) {
       console.error('기록 저장 실패', error);
