@@ -76,11 +76,6 @@ window.analyzeBusanPhotoFeatures = async function (image) {
 };
 
 window.addEventListener('load', () => {
-  const publicSiteUrl = 'https://giftedu161-bit.github.io/fishon-busan/';
-  const homeNotice = document.querySelector('#homePage .notice');
-  if (homeNotice && !document.querySelector('.qr-share-card')) {
-    homeNotice.insertAdjacentHTML('afterend', `<section class="qr-share-card"><img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(publicSiteUrl)}" alt="피쉬온 부산 웹사이트 QR 코드" /><div class="qr-share-copy"><span>OPEN ON MOBILE</span><b>휴대폰으로 바로 열기</b><small>${publicSiteUrl}</small><a href="${publicSiteUrl}" target="_blank" rel="noopener">웹사이트 열기 ↗</a></div></section>`);
-  }
   const collectionProgress = document.querySelector('#collectionPage .collection-progress');
   if (collectionProgress && !document.querySelector('.collection-visual')) {
     collectionProgress.insertAdjacentHTML('beforebegin', `<article class="collection-visual"><img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80" alt="바다 물고기 디자인 사진" /><div class="collection-visual-copy"><span>BUSAN SEA FIELD GUIDE</span><b>부산 바다를<br>기록하는 도감</b><small>내가 인증한 조과 사진으로 도감을 채워보세요.</small></div><a class="collection-source" href="https://unsplash.com/s/photos/fish" target="_blank" rel="noopener">Photo · Unsplash ↗</a></article>`);
