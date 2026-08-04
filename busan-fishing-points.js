@@ -25,12 +25,17 @@ window.addEventListener('load', () => {
   const submitRecord = document.querySelector('#submitRecord');
   if (submitRecord) submitRecord.onclick = async () => {
     const lengthCm = Number(document.querySelector('#lengthInput')?.value);
+    if (!window.fishonPhotoReady) { window.toast?.('사진을 먼저 선택하거나 촬영해주세요.'); return; }
+    if (!Number.isFinite(lengthCm) || lengthCm <= 0) { window.toast?.('직접 측정한 길이를 입력해주세요.'); return; }
     const selectedPoint = points[0];
+    const user = window.fishonUser;
+    const species = document.querySelector('#dbPrimarySpecies')?.textContent?.trim() || '감성돔';
+    const userName = user?.isAnonymous ? '게스트 사용자' : (localStorage.getItem('fishon-nickname') || user?.displayName || user?.email?.split('@')[0] || '부산 낚시꾼');
     try {
-      if (window.fishonData && window.fishonUser) {
-        await window.fishonData.saveCatch({ userId: window.fishonUser.uid, species: '감성돔', lengthCm, area: selectedPoint.name, pointId: selectedPoint.id, verified: true, verificationSource: 'photo-and-measurement' });
-      }
+      if (!window.fishonData || !user) { window.toast?.('로그인 상태를 확인해주세요.'); return; }
+      await window.fishonData.saveCatch({ userId: user.uid, userName, species, lengthCm, area: selectedPoint.name, pointId: selectedPoint.id, verified: true, verificationSource: 'photo-and-measurement' });
       window.show?.('ranking');
+      await window.renderLiveRanking?.();
       window.toast?.('검증 사진 조건으로 등록되었어요');
     } catch (error) {
       window.toast?.('기록 저장에 실패했어요');
