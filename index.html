@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#061f36" />
+    <title>피쉬온 부산 — 베타</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app" id="app">
+      <section class="page active splash" id="splashPage" data-go="login"><div class="splash-content"><p class="eyebrow">BUSAN SEA CATCH</p><h1>고기 몇 미터까지 잡을 수 있어?</h1><p>부산 바다에서 남기는 가장 정확한 기록</p></div><div class="splash-fish">🐟</div><div class="tap-start">화면을 터치해 시작하기 ›</div></section>
+      <section class="page auth-page" id="loginPage"><button class="back" data-go="splash">‹</button><div class="auth-logo">🐟</div><p class="eyebrow">WELCOME TO FISHON</p><h2>부산 바다의 기록을<br>시작해볼까요?</h2><p class="auth-copy">조과 인증부터 랭킹, 미션까지<br>피쉬온과 함께하세요.</p><button class="social kakao" id="loginButton">💬 카카오로 계속하기</button><button class="social google" id="googleLogin">G&nbsp;&nbsp;Google로 계속하기</button><button class="social guest" id="guestLogin">◌&nbsp;&nbsp;게스트로 시작하기</button><button class="social email" data-go="signup">이메일로 회원가입</button></section>
+      <section class="page auth-page" id="signupPage"><button class="back" data-go="login">‹</button><p class="eyebrow">CREATE ACCOUNT</p><h2>피쉬온 회원가입</h2><p class="auth-copy">랭킹에 표시할 정보를 입력해주세요.</p><label class="field">닉네임<input placeholder="예: 송정루어" /></label><label class="field">이메일<input type="email" placeholder="you@example.com" /></label><label class="field">비밀번호<input type="password" placeholder="8자 이상 입력" /></label><button class="primary signup-submit">가입하고 시작하기</button></section>
+      <header class="topbar">
+        <button class="avatar" aria-label="프로필">김</button>
+        <div><p class="eyebrow">BUSAN SEA CATCH</p><h1>피쉬온 부산</h1></div>
+        <button class="icon-button" id="settingsButton" aria-label="설정">⚙</button>
+      </header>
+
+      <section class="page active" id="homePage">
+        <div class="hero"><p>오늘의 바다 기록</p><h2>잡은 순간을<br><em>정확한 기록</em>으로.</h2><span>부산 바다 인증 랭킹 베타</span></div>
+        <button class="catch-card" data-go="capture"><span class="catch-plus">＋</span><span><b>새 조과 등록</b><small>카메라로 물고기와 측정매트를 촬영하세요</small></span><strong>›</strong></button>
+        <div class="section-title"><h3>내 기록</h3><button data-go="ranking">전체 보기</button></div>
+        <article class="record"><div class="fish-art">🐟</div><div><span class="badge verified">✓ 인증 완료</span><h3>감성돔 <b>42.8 cm</b></h3><p>오늘 · 송정권 · 08:42</p></div><strong class="points">+120P</strong></article>
+        <article class="notice"><span>✦</span><p><b>동백전 혜택, 준비 중</b><br>피쉬온 포인트를 부산 지역 혜택으로 만나는 기능을 준비하고 있어요.</p></article>
+      </section>
+
+      <section class="page" id="capturePage">
+        <div class="page-head"><button class="back" data-go="home">‹</button><div><p class="eyebrow">OFFICIAL RECORD</p><h2>새 조과 등록</h2></div></div>
+        <div class="steps"><span class="on">1 사진</span><i></i><span>2 분석</span><i></i><span>3 제출</span></div>
+        <div class="camera-box" id="cameraBox">
+          <video id="camera" autoplay playsinline muted></video><img id="preview" alt="촬영한 물고기 사진" />
+          <div class="camera-empty" id="cameraEmpty"><span>▧</span><b>물고기와 측정매트를<br>한 화면에 담아주세요</b><small>눈금 · QR 인증카드가 보여야 공식 랭킹에 반영됩니다</small></div>
+        </div>
+        <div class="camera-actions"><button class="secondary" id="galleryButton">갤러리</button><button class="shutter" id="shutter" aria-label="촬영"></button><button class="secondary" id="flipCamera">카메라 전환</button></div>
+        <input id="fileInput" type="file" accept="image/*" capture="environment" hidden />
+        <button class="primary disabled" id="analyzeButton" disabled>사진 분석하기</button>
+        <p class="privacy">공식 랭킹 인증을 위해 촬영 시간과 부산 해역 여부만 확인합니다.</p>
+      </section>
+
+      <section class="page" id="analysisPage">
+        <div class="page-head"><button class="back" data-go="capture">‹</button><div><p class="eyebrow">AI ANALYSIS</p><h2>조과 분석 결과</h2></div></div>
+        <div class="analysis-photo"><img id="analysisImage" alt="분석 사진" /><span class="badge verified">✓ AI 인증 가능</span></div>
+        <div class="result-card"><div><span>추정 어종</span><strong>감성돔</strong><small>신뢰도 96%</small></div><div><span>사진 추정 전장</span><strong>42.6 <small>cm</small></strong><small>측정매트 눈금 인식</small></div></div><div class="ai-evidence"><span>◈</span><p><b>어종 데이터베이스 대조 완료</b><br>부산 연안 출현 데이터 · 체형 특징 · 지느러미 패턴을 함께 비교했어요.</p></div>
+        <label class="field">직접 측정한 전장 (cm)<input id="lengthInput" type="number" step="0.1" value="42.8" inputmode="decimal" /></label>
+        <div class="verification"><span>✓</span><p><b>공식 랭킹 인증 가능</b><br>AI 추정값과 직접 입력값의 차이가 0.2cm입니다.</p></div>
+        <button class="primary" id="submitRecord">공식 기록으로 제출</button>
+      </section>
+
+      <section class="page" id="rankingPage">
+        <div class="page-head"><div><p class="eyebrow">BUSAN SEA RANKING</p><h2>부산 랭킹</h2></div><button class="location">⌖ 부산 전 해역</button></div>
+        <div class="tabs" id="periodTabs"><button class="selected">일간</button><button>주간</button><button>월간</button><button>역대</button></div>
+        <div class="species"><button class="selected">전체</button><button>감성돔</button><button>광어</button><button>참돔</button></div>
+        <article class="rank first"><span>1</span><div class="rank-photo">🐟</div><div><b>바다의왕</b><p>감성돔 · 53.4 cm</p></div><em>1,240P</em></article>
+        <article class="rank me"><span>2</span><div class="rank-photo">🐟</div><div><b>김낚시 <small>나</small></b><p>감성돔 · 42.8 cm</p></div><em>820P</em></article>
+        <article class="rank"><span>3</span><div class="rank-photo">🐟</div><div><b>송정루어</b><p>광어 · 41.2 cm</p></div><em>710P</em></article>
+      </section>
+
+      <section class="page" id="walletPage">
+        <div class="page-head"><div><p class="eyebrow">FISHON POINT</p><h2>포인트</h2></div></div>
+        <div class="wallet"><p>사용 가능 포인트</p><h2>1,280 <small>P</small></h2><span>인증 조과 등록과 랭킹 활동으로 모아요</span></div>
+        <article class="coming"><span>🌺</span><div><b>동백전 혜택으로 사용하기</b><p>부산 지역 상생을 위한 포인트 혜택을 준비 중이에요.</p></div><button disabled>준비 중</button></article>
+        <h3 class="history-title">최근 내역</h3><div class="history"><span>조과 인증 보상</span><b>+120 P</b></div><div class="history"><span>주간 랭킹 보상</span><b>+300 P</b></div>
+      </section>
+
+      <section class="page" id="missionPage"><div class="page-head"><div><p class="eyebrow">CATCH &amp; EARN</p><h2>오늘의 미션</h2></div><span class="mission-score">240 P</span></div><div class="mission-hero">🎣 <div><p>8월 첫째 주 챌린지</p><h3>부산 바다를 기록하세요</h3><small>3개 미션 완료 시 보너스 300P</small></div></div><article class="mission done"><span>✓</span><div><b>첫 조과 인증하기</b><p>공식 인증 사진을 등록하세요</p></div><strong>+120P</strong></article><article class="mission"><span>2</span><div><b>부산 해역 한 곳 탐방</b><p>지도에서 낚시 포인트를 확인하세요</p></div><strong>+60P</strong></article><article class="mission"><span>3</span><div><b>어종 도감 3종 채우기</b><p>새로운 어종을 기록해보세요</p></div><strong>+120P</strong></article></section>
+      <section class="page" id="mapPage"><div class="page-head"><div><p class="eyebrow">GOOGLE MAPS · BUSAN</p><h2>낚시 지도</h2></div><button class="location">⌖ 내 위치</button></div><div class="map-card google-map"><iframe title="부산 낚시 지도" src="https://www.google.com/maps?q=Busan%20Korea&z=10&output=embed" loading="lazy"></iframe><div class="map-legend">● 인증 가능한 부산 해역</div></div><h3 class="near-title">인기 포인트</h3><article class="spot">📍 <div><b>송정 해수욕장 동쪽 방파제</b><p>감성돔 · 벵에돔 · 오늘 파도 낮음</p></div><strong>2.1km</strong></article><article class="spot">📍 <div><b>가덕도 천성항</b><p>광어 · 우럭 · 인증 가능 해역</p></div><strong>18km</strong></article></section>
+      <section class="page" id="collectionPage"><div class="page-head"><div><p class="eyebrow">BUSAN SEA COLLECTION</p><h2>물고기 도감</h2></div><span class="collection-count">3 / 48</span></div><div class="collection-progress"><i></i></div><p class="collection-copy">부산 바다에서 만난 물고기를 모아보세요.</p><div class="collection-grid"><article class="fish-card found">🐟<b>감성돔</b><small>최대 42.8cm</small></article><article class="fish-card found">🐠<b>우럭</b><small>최대 31.2cm</small></article><article class="fish-card found">🐡<b>복어</b><small>최대 18.4cm</small></article><article class="fish-card">?<b>미발견</b><small>부산 연안</small></article><article class="fish-card">?<b>미발견</b><small>부산 연안</small></article><article class="fish-card">?<b>미발견</b><small>부산 연안</small></article></div></section>
+      <section class="page" id="settingsPage">
+        <div class="page-head"><button class="back" data-go="home">‹</button><div><p class="eyebrow">PREFERENCES</p><h2>설정</h2></div></div>
+        <h3 class="setting-label">조작 손</h3><div class="choice-row" id="handChoice"><button class="selected" data-hand="right">오른손잡이</button><button data-hand="left">왼손잡이</button></div>
+        <p class="hint">왼손잡이 모드에서는 주요 버튼과 하단 메뉴가 왼쪽에 맞춰집니다.</p>
+        <h3 class="setting-label">글꼴</h3><div class="choice-row" id="fontChoice"><button class="selected" data-font="sans">기본 고딕</button><button data-font="serif">명조</button><button data-font="round">둥근 글꼴</button></div>
+        <h3 class="setting-label">랭킹 개인정보</h3><div class="setting-switch"><span>정확한 위치 비공개</span><label><input type="checkbox" checked /><i></i></label></div>
+      </section>
+
+      <nav class="bottom-nav"><button class="active" data-go="home"><span>⌂</span>홈</button><button data-go="map"><span>⌖</span>지도</button><button data-go="capture" class="nav-catch"><span>＋</span></button><button data-go="mission"><span>◎</span>미션</button><button data-go="collection"><span>▧</span>도감</button></nav>
+    </main>
+    <div class="toast" id="toast"></div><script src="app.js"></script>
+  </body>
+</html>
