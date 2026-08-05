@@ -14,6 +14,7 @@
       const panel = document.querySelector('#busanDbPanel');
       if (!primary || !panel) return;
       const primaryScore = asPercent(score) || (primary.confidence === 'high' ? 82 : 72);
+      window.fishonSelectedSpecies = primary.name;
       const artwork = [
         { names: ['조피볼락', '우럭'], src: 'assets/fish-rockfish.png' },
         { names: ['돌돔'], src: 'assets/fish-striped-beakfish.png' },

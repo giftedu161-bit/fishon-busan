@@ -30,7 +30,10 @@ window.addEventListener('load', () => {
     if (!Number.isFinite(lengthCm) || lengthCm <= 0) { window.toast?.('직접 측정한 길이를 입력해주세요.'); return; }
     const selectedPoint = points[0];
     const user = window.fishonUser;
-    const species = document.querySelector('#dbPrimarySpecies')?.textContent?.trim() || '감성돔';
+    const species = window.fishonSelectedSpecies
+      || document.querySelector('#analysisSpecies')?.textContent?.trim()
+      || document.querySelector('#dbPrimarySpecies')?.textContent?.trim()
+      || '어종 미확인';
     const userName = user?.isAnonymous ? '게스트 사용자' : (localStorage.getItem('fishon-nickname') || user?.displayName || user?.email?.split('@')[0] || '부산 낚시꾼');
     try {
       if (!window.fishonData || !user) { window.toast?.('로그인 상태를 확인해주세요.'); return; }

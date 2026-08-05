@@ -17,8 +17,21 @@ window.BUSAN_SPECIES_DATA = [
 ];
 
 window.findBusanSpecies = function (name) {
-  const key = String(name || '').replace(/\s/g, '');
-  return window.BUSAN_SPECIES_DATA.find(item => item.name.replace(/\([^)]*\)/g, '').replace(/\s/g, '') === key) || null;
+  const normalize = value => String(value || '').replace(/\s|\([^)]*\)/g, '');
+  const key = normalize(name);
+  const aliases = {
+    '우럭': 'rockfish', '조피볼락': 'rockfish',
+    '광어': 'olive_flounder', '넙치': 'olive_flounder',
+    '감성돔': 'black_porgy', '전갱이': 'japanese_horse_mackerel',
+    '망상어': 'surfperch', '해삼': 'sea_cucumber', '성게': 'sea_urchin'
+  };
+  const aliasId = aliases[key];
+  return window.BUSAN_SPECIES_DATA.find(item => item.id === aliasId)
+    || window.BUSAN_SPECIES_DATA.find(item => {
+      const canonical = normalize(item.name);
+      const parenthetical = (item.name.match(/\(([^)]*)\)/)?.[1] || '').replace(/\s/g, '');
+      return canonical === key || parenthetical === key || canonical.includes(key) || key.includes(canonical);
+    }) || null;
 };
 
 window.renderBusanSpeciesCandidates = function (primaryName = '감성돔', score = null, note = null) {
