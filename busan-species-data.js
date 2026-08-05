@@ -107,13 +107,20 @@ window.addEventListener('load', () => {
     let apiResult;
     try {
       apiResult = await window.fishonAi?.analyze(image);
-    } catch (error) { console.info('AI 서버 연결 실패', error); }
+    } catch (error) {
+      console.info('AI 서버 연결 실패', error);
+      window.renderAiVerification({ verified: false, detail: `AI 서버 연결에 실패했습니다. 사진은 유지되므로 잠시 후 다시 분석해주세요. (${error.message || '네트워크 오류'})` });
+      window.show?.('analysis');
+      window.toast?.('AI 서버 연결이 지연됐어요. 다시 분석해주세요.');
+      return;
+    }
     const verified = Boolean(apiResult?.status === 'ready' && apiResult?.species);
     window.renderAiVerification({ species: apiResult?.species, confidence: apiResult?.confidence || 0, verified, detail: apiResult?.message });
     if (verified) window.renderBusanSpeciesCandidates(apiResult.species, `${Math.round(apiResult.confidence * 100)}%`, 'AI Hub EfficientDet-D2 실제 추론 결과');
     window.show?.('analysis');
     window.toast?.(verified ? `${apiResult.species} AI 검증을 완료했어요.` : 'AI가 물고기를 판별하지 못했어요. 다시 촬영해주세요.');
   };
+  document.querySelector('#retryAnalysis')?.addEventListener('click', () => analyzeButton.click());
   document.querySelector('#lengthInput')?.addEventListener('input', () => {
     if (window.fishonAnalysisVerified) window.renderAiVerification({ species: document.querySelector('#analysisSpecies')?.textContent, verified: true });
   });
