@@ -26,7 +26,9 @@
   };
   const artwork = (item, locked = false) => item.image
     ? `<img class="collection-species-image${locked ? ' locked' : ''}" src="${item.image}" alt="${item.name}" />`
-    : `<span class="collection-silhouette" aria-hidden="true">${locked ? '?' : '🐟'}</span>`;
+    : locked
+      ? `<img class="collection-species-image locked collection-generic-image" src="assets/fish-striped-beakfish.png" alt="미발견 어종 실루엣" />`
+      : '<span class="collection-silhouette" aria-hidden="true">🐟</span>';
 
   const updateSummary = (foundCount) => {
     const total = catalog.length;
