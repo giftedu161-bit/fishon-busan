@@ -25,15 +25,48 @@
     });
   };
 
+  const updateHomeRecord = () => {
+    const card = document.querySelector('#homeLatestRecord');
+    const item = findArtwork(card?.querySelector('h3')?.textContent || '');
+    const icon = card?.querySelector('.fish-art');
+    if (item && icon && !icon.querySelector('img')) icon.innerHTML = imageMarkup(item);
+  };
+
+  const updateMyRecords = () => {
+    document.querySelectorAll('#myRecordsList .my-record').forEach((row) => {
+      const item = findArtwork(row.querySelector('b')?.textContent || '');
+      const icon = row.querySelector(':scope > span');
+      if (item && icon && !icon.querySelector('img')) icon.innerHTML = imageMarkup(item);
+    });
+  };
+
   const install = () => {
     updateCollection();
     updateRanking();
-    window.addEventListener('load', () => { updateCollection(); updateRanking(); });
+    updateHomeRecord();
+    updateMyRecords();
+    window.addEventListener('load', () => { updateCollection(); updateRanking(); updateHomeRecord(); updateMyRecords(); });
     const originalRenderRanking = window.renderLiveRanking;
     if (typeof originalRenderRanking === 'function') {
       window.renderLiveRanking = async (...args) => {
         const result = await originalRenderRanking(...args);
         updateRanking();
+        return result;
+      };
+    }
+    const originalRenderHome = window.renderHomeRecord;
+    if (typeof originalRenderHome === 'function') {
+      window.renderHomeRecord = async (...args) => {
+        const result = await originalRenderHome(...args);
+        updateHomeRecord();
+        return result;
+      };
+    }
+    const originalRenderRecords = window.renderMyRecords;
+    if (typeof originalRenderRecords === 'function') {
+      window.renderMyRecords = async (...args) => {
+        const result = await originalRenderRecords(...args);
+        updateMyRecords();
         return result;
       };
     }
