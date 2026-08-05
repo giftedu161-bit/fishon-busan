@@ -18,7 +18,11 @@
         { names: ['조피볼락', '우럭'], src: 'assets/fish-rockfish.png' },
         { names: ['돌돔'], src: 'assets/fish-striped-beakfish.png' },
         { names: ['참돔'], src: 'assets/fish-red-seabream.png' },
-        { names: ['감성돔'], src: 'assets/fish-black-porgy.png' }
+        { names: ['감성돔'], src: 'assets/fish-black-porgy.png' },
+        { names: ['성게'], src: 'assets/species-sea-urchin.png' },
+        { names: ['해삼'], src: 'assets/species-sea-cucumber.png' },
+        { names: ['망상어'], src: 'assets/species-surfperch.png' },
+        { names: ['전갱이'], src: 'assets/species-horse-mackerel.png' }
       ].find((item) => item.names.some((name) => primary.name.includes(name)));
       const candidates = [primary, ...data.filter((item) => item.id !== primary.id).slice(0, 2)]
         .map((item, index) => ({ item, score: index === 0 ? primaryScore : Math.max(18, primaryScore - (index * 11 + 3)) }));

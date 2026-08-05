@@ -1,6 +1,6 @@
 (() => {
   const catalog = [
-    ['감성돔','어류','assets/fish-black-porgy.png'],['우럭','어류','assets/fish-rockfish.png'],['복어','어류',''],['참돔','어류','assets/fish-red-seabream.png'],['광어','어류',''],['농어','어류',''],['숭어','어류',''],['고등어','어류',''],['전갱이','어류',''],['붕장어','어류',''],['돌돔','어류','assets/fish-striped-beakfish.png'],['벵에돔','어류',''],['볼락','어류',''],['망상어','어류',''],['학공치','어류',''],['삼치','어류',''],['갈치','어류',''],['도다리','어류',''],['쥐노래미','어류',''],['성대','어류',''],['주꾸미','두족류',''],['문어','두족류',''],['갑오징어','두족류',''],['해삼','기타',''],['성게','기타','']
+    ['감성돔','어류','assets/fish-black-porgy.png'],['우럭','어류','assets/fish-rockfish.png'],['복어','어류',''],['참돔','어류','assets/fish-red-seabream.png'],['광어','어류',''],['농어','어류',''],['숭어','어류',''],['고등어','어류',''],['전갱이','어류','assets/species-horse-mackerel.png'],['붕장어','어류',''],['돌돔','어류','assets/fish-striped-beakfish.png'],['벵에돔','어류',''],['볼락','어류',''],['망상어','어류','assets/species-surfperch.png'],['학공치','어류',''],['삼치','어류',''],['갈치','어류',''],['도다리','어류',''],['쥐노래미','어류',''],['성대','어류',''],['주꾸미','두족류',''],['문어','두족류',''],['갑오징어','두족류',''],['해삼','기타','assets/species-sea-cucumber.png'],['성게','기타','assets/species-sea-urchin.png']
   ].map(([name, category, image]) => ({ name, category, image }));
   let records = [];
   let filter = 'all';
@@ -124,8 +124,10 @@
     modal.addEventListener('click', (event) => { if (event.target === modal) close(); });
     document.querySelectorAll('[data-go="collection"]').forEach((button) => button.addEventListener('click', () => setTimeout(loadRecords, 0)));
     window.addEventListener('fishon-auth-change', loadRecords);
+    window.addEventListener('load', loadRecords);
     window.renderFishonCollection = loadRecords;
     loadRecords();
+    setTimeout(loadRecords, 0);
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });

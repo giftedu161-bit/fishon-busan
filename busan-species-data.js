@@ -12,7 +12,8 @@ window.BUSAN_SPECIES_DATA = [
   { id:'common_octopus', name:'참문어', scientificName:'Octopus vulgaris', group:'두족류', habitats:['암초','방파제'], seasons:['봄','가을'], traits:['팔 8개','둥근 머리','색 변화'], confidence:'medium' },
   { id:'webfoot_octopus', name:'주꾸미', scientificName:'Amphioctopus fangsiao', group:'두족류', habitats:['모래','펄'], seasons:['봄'], traits:['작은 몸','팔 8개','둥근 외투막'], confidence:'medium' },
   { id:'sea_cucumber', name:'해삼', scientificName:'Apostichopus japonicus', group:'극피동물', habitats:['암초','모래'], seasons:['사계절'], traits:['원통형 몸','돌기','느린 이동'], confidence:'medium' },
-  { id:'sea_urchin', name:'성게', scientificName:'Mesocentrotus nudus', group:'극피동물', habitats:['암초','해조류'], seasons:['사계절'], traits:['구형 몸','긴 가시'], confidence:'medium' }
+  { id:'sea_urchin', name:'성게', scientificName:'Mesocentrotus nudus', group:'극피동물', habitats:['암초','해조류'], seasons:['사계절'], traits:['구형 몸','긴 가시'], confidence:'medium' },
+  { id:'surfperch', name:'망상어', scientificName:'Ditrema temminckii', group:'어류', habitats:['암초','해조류','연안'], seasons:['봄','여름','가을'], traits:['회갈색 몸','노란빛 지느러미','둥근 체형'], confidence:'medium' }
 ];
 
 window.findBusanSpecies = function (name) {
@@ -58,7 +59,11 @@ window.addEventListener('DOMContentLoaded', () => {
     '감성돔': 'assets/fish-black-porgy.png',
     '우럭': 'assets/fish-rockfish.png',
     '돌돔': 'assets/fish-striped-beakfish.png',
-    '참돔': 'assets/fish-red-seabream.png'
+    '참돔': 'assets/fish-red-seabream.png',
+    '성게': 'assets/species-sea-urchin.png',
+    '해삼': 'assets/species-sea-cucumber.png',
+    '망상어': 'assets/species-surfperch.png',
+    '전갱이': 'assets/species-horse-mackerel.png'
   };
   grid.innerHTML = collection.map(([name, icon, size, found]) => {
     const visual = collectionArtwork[name] ? `<img class="species-art" src="${collectionArtwork[name]}" alt="${name}" />` : icon;

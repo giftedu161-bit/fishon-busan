@@ -3,7 +3,11 @@
     { matches: ['조피볼락', '우럭'], src: 'assets/fish-rockfish.png', alt: '우럭' },
     { matches: ['돌돔'], src: 'assets/fish-striped-beakfish.png', alt: '돌돔' },
     { matches: ['참돔'], src: 'assets/fish-red-seabream.png', alt: '참돔' },
-    { matches: ['감성돔'], src: 'assets/fish-black-porgy.png', alt: '감성돔' }
+    { matches: ['감성돔'], src: 'assets/fish-black-porgy.png', alt: '감성돔' },
+    { matches: ['성게'], src: 'assets/species-sea-urchin.png', alt: '성게' },
+    { matches: ['해삼'], src: 'assets/species-sea-cucumber.png', alt: '해삼' },
+    { matches: ['망상어'], src: 'assets/species-surfperch.png', alt: '망상어' },
+    { matches: ['전갱이'], src: 'assets/species-horse-mackerel.png', alt: '전갱이' }
   ];
 
   const findArtwork = (text = '') => artwork.find((item) => item.matches.some((name) => text.includes(name)));
