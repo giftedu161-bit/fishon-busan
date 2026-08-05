@@ -22,7 +22,7 @@ window.findBusanSpecies = function (name) {
 
 window.renderBusanSpeciesCandidates = function (primaryName = '감성돔', score = null, note = null) {
   const primary = window.findBusanSpecies(primaryName) || window.BUSAN_SPECIES_DATA[0];
-  const alternatives = window.BUSAN_SPECIES_DATA.filter(item => item.id !== primary.id).slice(0, 3);
+  const alternatives = [];
   const panel = document.querySelector('#busanDbPanel');
   if (!panel) return;
   document.querySelector('#dbSpeciesCount').textContent = `${window.BUSAN_SPECIES_DATA.length}종 기준`;
