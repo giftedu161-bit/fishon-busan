@@ -115,6 +115,13 @@ window.addEventListener('load', () => {
       window.toast?.('AI 서버 연결이 지연됐어요. 다시 분석해주세요.');
       return;
     }
+    let geminiResult;
+    try { geminiResult = await window.fishonAi?.analyzeGemini(image); } catch (error) { console.info('Gemini 2차 판별 미사용', error); }
+    if (geminiResult?.status === 'ready' && geminiResult.species) {
+      if (!apiResult?.species) apiResult = geminiResult;
+      else if (apiResult.species !== geminiResult.species) apiResult = { ...apiResult, confidence: 0, message: `AI 모델은 ${apiResult.species}, Gemini는 ${geminiResult.species}로 판별했습니다. 자동 인증 대신 수동 확인이 필요합니다.` };
+      else apiResult = { ...apiResult, confidence: Math.min(Number(apiResult.confidence) || 0, Number(geminiResult.confidence) || 0), message: `AI 모델과 Gemini 2차 판별이 ${apiResult.species}로 일치했습니다.` };
+    }
     const confidence = Number(apiResult?.confidence) || 0;
     const verified = Boolean(apiResult?.status === 'ready' && apiResult?.species && confidence >= window.FISHON_MIN_CONFIDENCE);
     const detail = !verified && apiResult?.species && confidence < window.FISHON_MIN_CONFIDENCE ? `AI 신뢰도 ${Math.round(confidence * 100)}%입니다. 공식 기록 제출 기준은 40% 이상입니다.` : apiResult?.message;

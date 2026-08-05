@@ -1,4 +1,9 @@
+import base64
+import json
+import os
 import sys
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 from pathlib import Path
 
 import cv2
@@ -89,6 +94,44 @@ def health():
         return {"ready": True, "model": "EfficientDet-D2", "species": KOREAN_LABELS, "device": "CPU"}
     except Exception as error:
         return {"ready": False, "model": "EfficientDet-D2", "species": KOREAN_LABELS, "error": str(error)}
+
+
+@app.get("/gemini-health")
+def gemini_health():
+    return {"ready": bool(os.environ.get("GEMINI_API_KEY")), "model": "gemini-2.5-flash"}
+
+
+@app.post("/analyze-gemini")
+async def analyze_gemini(image: UploadFile = File(...)):
+    """Optional Gemini second opinion. The key stays only on the local AI server."""
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        return {"status": "unavailable", "message": "Gemini API 키가 서버에 설정되지 않았습니다."}
+    if not image.content_type or not image.content_type.startswith("image/"):
+        raise HTTPException(400, "이미지 파일만 분석할 수 있습니다.")
+    payload = await image.read()
+    if len(payload) > 12 * 1024 * 1024:
+        raise HTTPException(413, "사진은 12MB 이하로 올려주세요.")
+    prompt = (
+        "You verify a Korean sea fishing photo. Return JSON only with keys fish_present, species, confidence, reason. "
+        "species must be exactly one of 광어, 우럭, 참돔, 감성돔, 돌돔, or null. "
+        "confidence must be a number from 0 to 1. Do not guess when the fish is unclear."
+    )
+    body = {"contents": [{"parts": [{"text": prompt}, {"inline_data": {"mime_type": image.content_type, "data": base64.b64encode(payload).decode("ascii")}}]}], "generationConfig": {"temperature": 0, "responseMimeType": "application/json"}}
+    request = Request(
+        f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}",
+        data=json.dumps(body).encode("utf-8"), headers={"Content-Type": "application/json"}, method="POST"
+    )
+    try:
+        with urlopen(request, timeout=35) as response:
+            response_data = json.loads(response.read().decode("utf-8"))
+        text = response_data["candidates"][0]["content"]["parts"][0]["text"].strip().removeprefix("```json").removesuffix("```").strip()
+        result = json.loads(text)
+        species = result.get("species") if result.get("species") in KOREAN_LABELS else None
+        confidence = max(0, min(1, float(result.get("confidence", 0))))
+        return {"status": "ready", "species": species, "confidence": confidence, "message": f"Gemini 2차 판별: {result.get('reason', '')}"}
+    except (HTTPError, URLError, KeyError, ValueError, json.JSONDecodeError) as error:
+        return {"status": "unavailable", "message": f"Gemini 2차 판별을 사용할 수 없습니다: {error}"}
 
 
 @app.post("/analyze")
