@@ -15,6 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 MODEL_ROOT = Path(__file__).resolve().parent.parent / "fish-ai-model"
 WEIGHTS = MODEL_ROOT / "trained_weight" / "20210222_efficientdet-d2_29_203900.pth"
+REFERENCE_MANIFEST = MODEL_ROOT / "training-reference-manifest.json"
 KOREAN_LABELS = ["광어", "우럭", "참돔", "감성돔", "돌돔"]
 INPUT_SIZE = 768  # EfficientDet-D2
 
@@ -87,13 +88,38 @@ def prepare_image(payload: bytes):
     return tensor
 
 
+def training_reference_summary():
+    """Return the labelled beta photos that are ready for annotation/training."""
+    try:
+        manifest = json.loads(REFERENCE_MANIFEST.read_text(encoding="utf-8"))
+        names = manifest.get("species", {})
+        counts = {}
+        for label, _ in manifest.get("samples", []):
+            counts[label] = counts.get(label, 0) + 1
+        return {
+            "sampleCount": sum(counts.values()),
+            "speciesCount": len(counts),
+            "bySpecies": [{"label": label, "name": names.get(label, label), "count": count}
+                          for label, count in counts.items()],
+            "status": "prepared_for_annotation",
+        }
+    except (OSError, ValueError, TypeError):
+        return {"sampleCount": 0, "speciesCount": 0, "bySpecies": [], "status": "unavailable"}
+
+
 @app.get("/health")
 def health():
     try:
         load_model()
-        return {"ready": True, "model": "EfficientDet-D2", "species": KOREAN_LABELS, "device": "CPU"}
+        return {"ready": True, "model": "EfficientDet-D2", "species": KOREAN_LABELS, "device": "CPU", "trainingReferences": training_reference_summary()}
     except Exception as error:
         return {"ready": False, "model": "EfficientDet-D2", "species": KOREAN_LABELS, "error": str(error)}
+
+
+@app.get("/training-references")
+def training_references():
+    """Expose only aggregate training status; source photos remain local."""
+    return training_reference_summary()
 
 
 @app.get("/gemini-health")

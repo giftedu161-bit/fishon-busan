@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Human-labelled photo references supplied during FishOn Busan beta testing. These samples are for training preparation and validation; they are not a replacement for annotated detection training data.",
+  "species": {
+    "OliveFlounder": "광어",
+    "KoreaRockfish": "우럭",
+    "RedSeabream": "참돔",
+    "BlackPorgy": "감성돔",
+    "RockBream": "돌돔"
+  },
+  "samples": [
+    ["OliveFlounder", "codex-clipboard-002cafb0-ee63-447c-8000-cc0724b762f8.png"],
+    ["KoreaRockfish", "codex-clipboard-1f383891-4632-4b22-af69-23d3272f2328.png"],
+    ["BlackPorgy", "C:/Users/RentalLink/Downloads/감성돔.jpg"],
+    ["KoreaRockfish", "codex-clipboard-bf079c80-d453-4496-a466-1a690e4c3579.png"],
+    ["OliveFlounder", "codex-clipboard-e02f3022-9582-440b-867f-5de8a62a82a7.png"],
+    ["BlackPorgy", "codex-clipboard-32c1beda-5ed2-4c99-a0a0-0dd1b13770be.png"],
+    ["RockBream", "codex-clipboard-3d87f64b-9dd8-4667-8f77-6981c82d7edb.png"],
+    ["BlackPorgy", "codex-clipboard-bbbe3a31-6932-49b3-83e7-c4195c868be7.png"],
+    ["BlackPorgy", "codex-clipboard-847a756b-3861-42c7-8ec7-8ec42c329d0a.png"],
+    ["BlackPorgy", "codex-clipboard-05086ce8-c7b8-4488-80d2-381ef897e97a.png"],
+    ["BlackPorgy", "codex-clipboard-12ccc810-0bea-4f0c-882b-e45abd1df415.png"],
+    ["BlackPorgy", "codex-clipboard-f4802325-9674-47b3-8c6c-a770bbffa927.png"],
+    ["OliveFlounder", "codex-clipboard-fa9ef756-fb5b-40ce-a1e5-a596b487bf41.png"],
+    ["OliveFlounder", "codex-clipboard-844578c5-5ed4-430c-8ca1-7b9b33050d88.png"],
+    ["OliveFlounder", "codex-clipboard-4ee7322b-48d1-4186-9c2c-518b34f0ffd4.png"],
+    ["OliveFlounder", "codex-clipboard-3c717f64-9c00-431e-a256-ca3dcae44986.png"],
+    ["OliveFlounder", "codex-clipboard-f1ef8c32-ec7e-4fc5-b1d4-976eaf377a88.png"],
+    ["KoreaRockfish", "codex-clipboard-1aeebcca-a76f-41e9-b89b-32b2386ff654.png"],
+    ["KoreaRockfish", "codex-clipboard-e4e000c9-28b7-49ab-9f66-6adb2f23261a.png"],
+    ["KoreaRockfish", "codex-clipboard-631329b0-6ea9-4945-bb33-a3a5a2b14689.png"],
+    ["KoreaRockfish", "codex-clipboard-97201a7d-d4c9-4339-a37f-f8ec51d52d0a.png"],
+    ["KoreaRockfish", "codex-clipboard-4b4644d2-9da2-4beb-83da-37619ae04d17.png"],
+    ["KoreaRockfish", "codex-clipboard-a4dbabae-7459-46e7-aa3f-bd3ac52fb095.png"],
+    ["KoreaRockfish", "codex-clipboard-7f6b87d6-8875-4543-8f35-5f7ebedf224f.png"],
+    ["KoreaRockfish", "codex-clipboard-06c93832-cb6f-4349-84fb-7a6237f414f5.png"],
+    ["KoreaRockfish", "codex-clipboard-e29e137b-7117-45da-878a-f2d1da85b8da.png"],
+    ["KoreaRockfish", "codex-clipboard-c795dccf-78b7-4512-bd1e-b6ddc6122ebb.png"],
+    ["KoreaRockfish", "codex-clipboard-be298d1b-4b1d-4df9-94be-187383527858.png"],
+    ["KoreaRockfish", "codex-clipboard-8c006c00-3948-4fd8-a9da-29ca78d619a2.png"],
+    ["KoreaRockfish", "codex-clipboard-bdcd0232-b34c-4ed0-894c-a9d0d800237b.png"]
+  ]
+}
