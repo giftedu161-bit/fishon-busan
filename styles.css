@@ -83,3 +83,13 @@
 .font-size-control small{color:#6d858a;font-size:10px;white-space:nowrap}
 .font-size-control input{width:100%;accent-color:#0b7c8f}
 .font-size-control output{color:#08718b;font-size:11px;font-weight:800;white-space:nowrap}
+
+/* 큰 글자에서도 조작 영역은 한 줄을 유지 */
+.settings-row,.profile-entry,.record,.catch-card,.rank{min-width:0}
+.settings-row>b,.settings-row .compact,.choice-row button,.tabs button,.species button,.bottom-nav button,.font-size-control,.font-size-control small,.font-size-control output{white-space:nowrap}
+.settings-row>b{flex-shrink:0}
+.settings-row .compact{min-width:0;flex-wrap:nowrap;overflow-x:auto}
+.font-size-control{min-width:0}
+.font-size-control input{min-width:48px}
+.font-size-control small{font-size:10px!important}
+.font-size-control output{font-size:11px!important}
