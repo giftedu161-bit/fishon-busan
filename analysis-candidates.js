@@ -14,6 +14,12 @@
       const panel = document.querySelector('#busanDbPanel');
       if (!primary || !panel) return;
       const primaryScore = asPercent(score) || (primary.confidence === 'high' ? 82 : 72);
+      const artwork = [
+        { names: ['조피볼락', '우럭'], src: 'assets/fish-rockfish.png' },
+        { names: ['돌돔'], src: 'assets/fish-striped-beakfish.png' },
+        { names: ['참돔'], src: 'assets/fish-red-seabream.png' },
+        { names: ['감성돔'], src: 'assets/fish-black-porgy.png' }
+      ].find((item) => item.names.some((name) => primary.name.includes(name)));
       const candidates = [primary, ...data.filter((item) => item.id !== primary.id).slice(0, 2)]
         .map((item, index) => ({ item, score: index === 0 ? primaryScore : Math.max(18, primaryScore - (index * 11 + 3)) }));
 
@@ -21,6 +27,8 @@
       document.querySelector('#dbPrimarySpecies').textContent = `${primary.name} · 1순위`;
       document.querySelector('#dbPrimaryMeta').textContent = `${primary.habitats.join(' · ')} · ${primary.seasons.join(' · ')}`;
       document.querySelector('#dbPrimaryScore').textContent = `${primaryScore}%`;
+      const primaryIcon = document.querySelector('#busanDbPanel .db-icon');
+      if (primaryIcon && artwork) primaryIcon.innerHTML = `<img class="db-species-art" src="${artwork.src}" alt="${primary.name}" />`;
       document.querySelector('#dbCandidates').innerHTML = candidates.slice(1).map(({ item, score: candidateScore }, index) => `
         <button type="button" class="db-candidate" data-species="${item.name}" data-score="${candidateScore}">
           <span>후보 ${index + 2}</span><b>${item.name}</b><em>${candidateScore}%</em>
