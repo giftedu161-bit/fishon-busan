@@ -93,3 +93,8 @@
 .font-size-control input{min-width:48px}
 .font-size-control small{font-size:10px!important}
 .font-size-control output{font-size:11px!important}
+
+/* 홈의 섹션 제목과 이동 버튼은 항상 같은 줄에 표시 */
+.section-title{flex-wrap:nowrap;min-width:0}
+.section-title h3{min-width:0;white-space:nowrap}
+.section-title button{margin-left:auto;flex-shrink:0;white-space:nowrap}
