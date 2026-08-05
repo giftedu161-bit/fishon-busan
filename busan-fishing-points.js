@@ -47,6 +47,10 @@ window.addEventListener('load', () => {
         window.toast?.('게스트 개인 기록으로 저장했어요. 나만 볼 수 있어요.');
       } else {
         window.fishonOptimisticRanking = [savedCatch, ...(window.fishonOptimisticRanking || [])];
+        window.selectedRankSpecies = '전체';
+        document.querySelectorAll('#rankSpecies button').forEach((button) => {
+          button.classList.toggle('selected', button.textContent.trim() === '전체');
+        });
         window.show?.('ranking');
         try { await window.renderLiveRanking?.(); } catch (error) { console.warn('랭킹 새로고침 실패', error); }
         window.toast?.('부산 랭킹에 등록되었어요!');
