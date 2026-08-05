@@ -54,7 +54,16 @@ window.addEventListener('DOMContentLoaded', () => {
     ['쥐노래미', '🐠', '?', false], ['성대', '🐟', '?', false], ['쭈꾸미', '🐙', '?', false],
     ['문어', '🐙', '?', false], ['갑오징어', '🦑', '?', false], ['해삼', '🪸', '?', false], ['성게', '🦔', '?', false]
   ];
-  grid.innerHTML = collection.map(([name, icon, size, found]) => `<article class="fish-card${found ? ' found' : ''}"><span>${icon}</span><b>${name}</b><strong>${size.includes(' ') ? size.replace(' ', ' <small>') + '</small>' : size}</strong><i></i></article>`).join('');
+  const collectionArtwork = {
+    '감성돔': 'assets/fish-black-porgy.png',
+    '우럭': 'assets/fish-rockfish.png',
+    '돌돔': 'assets/fish-striped-beakfish.png',
+    '참돔': 'assets/fish-red-seabream.png'
+  };
+  grid.innerHTML = collection.map(([name, icon, size, found]) => {
+    const visual = collectionArtwork[name] ? `<img class="species-art" src="${collectionArtwork[name]}" alt="${name}" />` : icon;
+    return `<article class="fish-card${found ? ' found' : ''}"><span>${visual}</span><b>${name}</b><strong>${size.includes(' ') ? size.replace(' ', ' <small>') + '</small>' : size}</strong><i></i></article>`;
+  }).join('');
 });
 
 window.analyzeBusanPhotoFeatures = async function (image) {

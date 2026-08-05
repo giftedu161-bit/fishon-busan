@@ -28,6 +28,7 @@
   const install = () => {
     updateCollection();
     updateRanking();
+    window.addEventListener('load', () => { updateCollection(); updateRanking(); });
     const originalRenderRanking = window.renderLiveRanking;
     if (typeof originalRenderRanking === 'function') {
       window.renderLiveRanking = async (...args) => {
