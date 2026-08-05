@@ -30,7 +30,13 @@ window.renderBusanSpeciesCandidates = function (primaryName = '감성돔', score
   document.querySelector('#dbPrimaryMeta').textContent = `${primary.habitats.join(' · ')} · ${primary.seasons.join(' · ')}`;
   document.querySelector('#dbPrimaryScore').textContent = score || (primary.confidence === 'high' ? '96%' : '88%');
   document.querySelector('#dbCandidates').innerHTML = alternatives.map((item, index) => `<button type="button">후보 ${index + 2} <b>${item.name}</b> · ${82 - index * 5}%</button>`).join('');
-  if (note) panel.querySelector('.db-note').textContent = note;
+  const trainingCount = 40;
+  document.querySelector('#dbSpeciesCount').textContent = `5\uC885 \u00b7 ${trainingCount}\uC7A5`;
+  document.querySelector('#dbCandidates').innerHTML = [
+    '<span>\uD559\uC2B5 \uC5B4\uC885 5\uC885</span>',
+    `<span>\uB77C\uBCA8 \uC0AC\uC9C4 ${trainingCount}\uC7A5</span>`
+  ].join('');
+  panel.querySelector('.db-note').textContent = note || '\uC0AC\uC9C4 \uBD84\uC11D \uACB0\uACFC\uC640 \uD559\uC2B5 \uAE30\uC900 \uC5B4\uC885 \uC815\uBCF4\uB97C \uD568\uAED8 \uD45C\uC2DC\uD569\uB2C8\uB2E4.';
 };
 
 window.addEventListener('DOMContentLoaded', () => window.renderBusanSpeciesCandidates());
