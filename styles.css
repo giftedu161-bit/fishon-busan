@@ -98,3 +98,7 @@
 .section-title{flex-wrap:nowrap;min-width:0}
 .section-title h3{min-width:0;white-space:nowrap}
 .section-title button{margin-left:auto;flex-shrink:0;white-space:nowrap}
+
+/* 선택한 글꼴은 모든 앱 화면과 동적 카드에도 동일하게 적용 */
+#app.font-serif,#app.font-serif *{font-family:'Noto Serif KR',serif!important}
+#app.font-round,#app.font-round *{font-family:'Gowun Dodum',sans-serif!important}
