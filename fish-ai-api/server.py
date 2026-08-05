@@ -130,7 +130,13 @@ async def analyze_gemini(image: UploadFile = File(...)):
         species = result.get("species") if result.get("species") in KOREAN_LABELS else None
         confidence = max(0, min(1, float(result.get("confidence", 0))))
         return {"status": "ready", "species": species, "confidence": confidence, "message": f"Gemini 2차 판별: {result.get('reason', '')}"}
-    except (HTTPError, URLError, KeyError, ValueError, json.JSONDecodeError) as error:
+    except HTTPError as error:
+        try:
+            provider_message = json.loads(error.read().decode("utf-8")).get("error", {}).get("message", str(error))
+        except Exception:
+            provider_message = str(error)
+        return {"status": "unavailable", "message": f"Gemini 2차 판별을 사용할 수 없습니다: {provider_message}"}
+    except (URLError, KeyError, ValueError, json.JSONDecodeError) as error:
         return {"status": "unavailable", "message": f"Gemini 2차 판별을 사용할 수 없습니다: {error}"}
 
 
