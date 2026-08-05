@@ -1,2 +1,2 @@
-// 로컬 AI 서버 주소입니다. 공개 배포 시 HTTPS 서버 주소로 바꾸세요.
-window.FISHON_AI_API_URL = localStorage.getItem('fishon-ai-api-url') || 'http://127.0.0.1:8000';
+// Cloudflare Quick Tunnel HTTPS 주소입니다. 터널을 다시 시작하면 새 주소로 교체해야 합니다.
+window.FISHON_AI_API_URL = 'https://utilize-simpsons-ballot-theoretical.trycloudflare.com';

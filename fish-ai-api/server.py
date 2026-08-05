@@ -26,6 +26,14 @@ app.add_middleware(
 )
 
 
+@app.middleware("http")
+async def allow_private_network(request, call_next):
+    """Allow the HTTPS GitHub Pages app to call this local development API."""
+    response = await call_next(request)
+    response.headers["Access-Control-Allow-Private-Network"] = "true"
+    return response
+
+
 def load_model():
     global _model, _runtime_error
     if _model is not None:
