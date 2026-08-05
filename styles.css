@@ -144,6 +144,11 @@ body{min-height:100dvh}
 #collectionPage .collection-head,#collectionPage .collection-summary,#collectionPage .collection-copy,#collectionPage .collection-visual{flex:0 0 auto}
 #collectionPage .collection-grid{min-height:0;flex:1;overflow-y:auto;overscroll-behavior:contain;padding:4px 2px 20px;margin-right:-3px}
 
+/* Keep ranking filters in place while only the results list scrolls. */
+#rankingPage.active{display:flex;flex-direction:column;overflow:hidden}
+#rankingPage .page-head,#rankingPage .tabs,#rankingPage .species{flex:0 0 auto}
+#rankingPage .ranking-results{min-height:0;flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:4px 2px 18px;margin:0 -2px}
+
 @media (min-width:600px){
   .app{height:min(900px,calc(100dvh - 48px));min-height:min(900px,calc(100dvh - 48px));max-height:min(900px,calc(100dvh - 48px))}
   .page.active{max-height:calc(min(900px,calc(100dvh - 48px)) - 150px)}
