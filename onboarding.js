@@ -8,7 +8,7 @@
     const previous = document.querySelector('#onboardingPrev');
     const next = document.querySelector('#onboardingNext');
     const skip = document.querySelector('#onboardingSkip');
-    if (!overlay || !slides.length || localStorage.getItem(storageKey) === 'true') return;
+    if (!overlay || !slides.length) return;
 
     let current = 0;
     const complete = () => {
@@ -23,15 +23,26 @@
       next.textContent = current === slides.length - 1 ? '시작하기' : '다음';
     };
 
-    overlay.hidden = false;
-    document.body.classList.add('onboarding-open');
-    render();
+    const showTutorial = () => {
+      current = 0;
+      localStorage.removeItem(storageKey);
+      overlay.hidden = false;
+      document.body.classList.add('onboarding-open');
+      render();
+    };
+    window.showFishonOnboarding = showTutorial;
+
     previous.addEventListener('click', () => { current = Math.max(0, current - 1); render(); });
     next.addEventListener('click', () => {
       if (current === slides.length - 1) complete();
       else { current += 1; render(); }
     });
     skip.addEventListener('click', complete);
+
+    if (localStorage.getItem(storageKey) === 'true') return;
+    overlay.hidden = false;
+    document.body.classList.add('onboarding-open');
+    render();
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
