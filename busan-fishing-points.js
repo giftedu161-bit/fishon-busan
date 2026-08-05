@@ -4,7 +4,7 @@ window.FISHON_BUSAN_POINTS = [
   { id: 'songjeong-port', name: '송정항 동쪽 방파제', district: '해운대구', species: ['감성돔', '벵에돔'], latitude: 35.1790, longitude: 129.2026, status: '참고 포인트' },
   { id: 'mipo-port', name: '미포항 방파제', district: '해운대구', species: ['농어', '전갱이'], latitude: 35.1588, longitude: 129.1715, status: '참고 포인트' },
   { id: 'gongsu-port', name: '기장 공수항', district: '기장군', species: ['감성돔', '볼락'], latitude: 35.1884, longitude: 129.2202, status: '참고 포인트' },
-  { id: 'daebyeon-port', name: '기장 대변항', district: '기장군', species: ['전갱이', '고등어'], latitude: 35.2384, longitude: 129.2290, status: '참고 포인트' },
+  { id: 'daebyeon-port', name: '기장 대변항', district: '기장군', species: ['전갱이', '고등어'], latitude: 35.2248015, longitude: 129.2283203, status: '참고 포인트' },
   { id: 'gijang-gilcheon', name: '기장 길천 방파제', district: '기장군', species: ['감성돔', '숭어'], latitude: 35.3127, longitude: 129.2715, status: '참고 포인트' },
   { id: 'gijang-hakri', name: '기장 학리 방파제', district: '기장군', species: ['우럭', '감성돔'], latitude: 35.3209, longitude: 129.2770, status: '참고 포인트' },
   { id: 'songdo-beach', name: '송도해수욕장 일원', district: '서구', species: ['우럭', '볼락'], latitude: 35.0750, longitude: 129.0185, status: '참고 포인트' },
