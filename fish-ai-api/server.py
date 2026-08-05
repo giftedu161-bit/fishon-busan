@@ -20,7 +20,7 @@ _runtime_error = None
 app = FastAPI(title="FishOn Busan AI")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://giftedu161-bit.github.io", "http://localhost:8000"],
+    allow_origins=["https://giftedu161-bit.github.io", "http://localhost:8000", "null"],
     allow_methods=["POST", "GET"],
     allow_headers=["*"],
 )
