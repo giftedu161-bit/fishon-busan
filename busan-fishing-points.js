@@ -3,16 +3,16 @@
 window.FISHON_BUSAN_POINTS = [
   { id: 'songjeong-port', name: '송정항 동쪽 방파제', district: '해운대구', species: ['감성돔', '벵에돔'], latitude: 35.1801570, longitude: 129.2073288, status: '참고 포인트' },
   { id: 'mipo-port', name: '미포항 방파제', district: '해운대구', species: ['농어', '전갱이'], latitude: 35.1579599, longitude: 129.1716658, status: '참고 포인트' },
-  { id: 'gongsu-port', name: '기장 공수항', district: '기장군', species: ['감성돔', '볼락'], latitude: 35.1884, longitude: 129.2202, status: '참고 포인트' },
+  { id: 'gongsu-port', name: '기장 공수항', district: '기장군', species: ['감성돔', '볼락'], latitude: 35.1885, longitude: 129.2218, status: '참고 포인트' },
   { id: 'daebyeon-port', name: '기장 대변항', district: '기장군', species: ['전갱이', '고등어'], latitude: 35.2248015, longitude: 129.2283203, status: '참고 포인트' },
-  { id: 'gijang-gilcheon', name: '기장 길천 방파제', district: '기장군', species: ['감성돔', '숭어'], latitude: 35.3127, longitude: 129.2715, status: '참고 포인트' },
-  { id: 'gijang-hakri', name: '기장 학리 방파제', district: '기장군', species: ['우럭', '감성돔'], latitude: 35.3209, longitude: 129.2770, status: '참고 포인트' },
+  { id: 'gijang-gilcheon', name: '기장 길천 방파제', district: '기장군', species: ['감성돔', '숭어'], latitude: 35.3126, longitude: 129.2732, status: '참고 포인트' },
+  { id: 'gijang-hakri', name: '기장 학리 방파제', district: '기장군', species: ['우럭', '감성돔'], latitude: 35.3208, longitude: 129.2782, status: '참고 포인트' },
   { id: 'songdo-beach', name: '송도해수욕장 일원', district: '서구', species: ['우럭', '볼락'], latitude: 35.0750, longitude: 129.0185, status: '참고 포인트' },
   { id: 'gamcheon-port', name: '감천항 중앙부두', district: '사하구', species: ['전갱이', '고등어'], latitude: 35.0817, longitude: 128.9970, status: '현장 규정 확인' },
   { id: 'dadaepo-port', name: '다대포항', district: '사하구', species: ['삼치', '볼락'], latitude: 35.0570, longitude: 128.9701, status: '참고 포인트' },
   { id: 'natgae-breakwater', name: '다대포 낫개방파제', district: '사하구', species: ['감성돔', '볼락'], latitude: 35.0463, longitude: 128.9643, status: '참고 포인트' },
   { id: 'gadeok-cheonseong', name: '가덕도 천성항', district: '강서구', species: ['광어', '우럭'], latitude: 35.0268344, longitude: 128.8128217, status: '참고 포인트' },
-  { id: 'taejongdae', name: '태종대 해안 일원', district: '영도구', species: ['볼락', '감성돔'], latitude: 35.0530700, longitude: 129.0872000, status: '현장 규정 확인' }
+  { id: 'taejongdae', name: '태종대 해안 일원', district: '영도구', species: ['볼락', '감성돔'], latitude: 35.0508, longitude: 129.0912, status: '현장 규정 확인' }
 ];
 
 window.addEventListener('load', () => {
