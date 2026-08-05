@@ -102,3 +102,26 @@
 /* 선택한 글꼴은 모든 앱 화면과 동적 카드에도 동일하게 적용 */
 #app.font-serif,#app.font-serif *{font-family:'Noto Serif KR',serif!important}
 #app.font-round,#app.font-round *{font-family:'Gowun Dodum',sans-serif!important}
+
+/* Mobile viewport discipline: keep the app frame stable and scroll only content. */
+html,body{height:100%;min-height:100%;overflow:hidden}
+body{min-height:100dvh}
+.app{height:100dvh;min-height:100dvh;max-height:100dvh;overflow:hidden}
+.page.active{max-height:calc(100dvh - 150px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-right:1px}
+
+/* Keep the map proportionate; its information list scrolls independently. */
+#mapPage.active{display:flex;flex-direction:column;gap:0;overflow:hidden}
+#mapPage .page-head{flex:0 0 auto}
+#mapPage .map-card{height:clamp(240px,40dvh,330px);flex:0 0 clamp(240px,40dvh,330px)}
+#mapPage .map-data-scroll{min-height:0;flex:1;overflow-y:auto;overscroll-behavior:contain;padding:0 2px 16px}
+#mapPage .map-data-scroll .banakpo-link{margin-top:14px}
+
+/* The collection title stays fixed while only the long fish catalogue scrolls. */
+#collectionPage.active{display:flex;flex-direction:column;overflow:hidden}
+#collectionPage .collection-head,#collectionPage .collection-summary,#collectionPage .collection-copy,#collectionPage .collection-visual{flex:0 0 auto}
+#collectionPage .collection-grid{min-height:0;flex:1;overflow-y:auto;overscroll-behavior:contain;padding:4px 2px 20px;margin-right:-3px}
+
+@media (min-width:600px){
+  .app{height:min(900px,calc(100dvh - 48px));min-height:min(900px,calc(100dvh - 48px));max-height:min(900px,calc(100dvh - 48px))}
+  .page.active{max-height:calc(min(900px,calc(100dvh - 48px)) - 150px)}
+}
