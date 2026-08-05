@@ -129,6 +129,18 @@
 
       <nav class="bottom-nav"><button class="active" data-go="home"><img class="nav-icon" src="assets/nav-home.png" alt="" />홈</button><button data-go="map"><img class="nav-icon" src="assets/nav-map.png" alt="" />지도</button><button data-go="capture" class="nav-catch"><span>＋</span></button><button data-go="mission"><img class="nav-icon" src="assets/nav-mission.png" alt="" />미션</button><button data-go="collection"><img class="nav-icon" src="assets/nav-collection.png" alt="" />도감</button></nav>
     </main>
-    <div class="toast" id="toast"></div><script src="firebase-config.js"></script><script src="ai-api-config.js?v=28"></script><script src="ai-api-client.js?v=29"></script><script src="busan-species-data.js?v=35"></script><script type="module" src="firebase.js?v=28"></script><script src="app.js?v=43"></script><script src="signup-agreements.js?v=1"></script><script src="busan-fishing-points.js?v=34"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script src="openstreet-map.js?v=13"></script>
+    <section class="onboarding" id="onboarding" aria-label="피쉬온 사용 안내" aria-modal="true" role="dialog" hidden>
+      <div class="onboarding-card">
+        <div class="onboarding-top"><p class="eyebrow">FISHON GUIDE</p><button type="button" class="onboarding-skip" id="onboardingSkip">건너뛰기</button></div>
+        <div class="onboarding-slides">
+          <article class="onboarding-slide active" data-slide="0"><div class="onboarding-art">📏<span>▦</span><i>⌘</i></div><p class="onboarding-step">01 · 조과 인증</p><h2>측정매트 위에서<br>정확하게 촬영하세요</h2><p>물고기 전체와 눈금이 함께 보이도록 놓고, 측정매트의 QR까지 한 화면에 담아 인증해요.</p><ul><li>물고기 머리부터 꼬리까지 보이게</li><li>눈금과 QR이 흐리지 않게</li></ul></article>
+          <article class="onboarding-slide" data-slide="1"><div class="onboarding-art points-art">✦ <b>+120P</b></div><p class="onboarding-step">02 · 포인트</p><h2>인증하고<br>포인트를 모아보세요</h2><p>AI 검증을 통과한 조과는 포인트로 보상받고, 주간 랭킹에서도 추가 보상을 받아요.</p><ul><li>공식 조과 인증 완료: <b>+120P</b></li><li>주간 랭킹 보상: 최대 <b>+300P</b></li></ul></article>
+          <article class="onboarding-slide" data-slide="2"><div class="onboarding-art ranking-art">🏆<span>1</span><i>2</i><em>3</em></div><p class="onboarding-step">03 · 부산 랭킹</p><h2>내 기록이 부산의<br>랭킹이 됩니다</h2><p>길이를 기준으로 일간·주간·월간·역대 랭킹을 집계하며, 원하는 어종만 골라 볼 수도 있어요.</p><ul><li>전체 · 감성돔 · 광어 · 참돔 등 어종별</li><li>공식 인증 기록만 랭킹에 반영</li></ul></article>
+          <article class="onboarding-slide" data-slide="3"><div class="onboarding-art collection-art">📖<span>🐟</span><i>✦</i></div><p class="onboarding-step">04 · 도감</p><h2>부산 바다의 어종을<br>하나씩 발견하세요</h2><p>처음 인증한 어종은 내 도감에 등록돼요. 다양한 조과를 기록하며 도감을 완성해보세요.</p><ul><li>새 어종을 인증하면 도감 등록</li><li>도감에서 발견한 어종과 정보를 확인</li></ul></article>
+        </div>
+        <div class="onboarding-footer"><div class="onboarding-dots" aria-label="튜토리얼 진행 상태"><i class="active"></i><i></i><i></i><i></i></div><div class="onboarding-actions"><button type="button" class="onboarding-prev" id="onboardingPrev" disabled>이전</button><button type="button" class="onboarding-next" id="onboardingNext">다음</button></div></div>
+      </div>
+    </section>
+    <div class="toast" id="toast"></div><script src="firebase-config.js"></script><script src="ai-api-config.js?v=28"></script><script src="ai-api-client.js?v=29"></script><script src="busan-species-data.js?v=35"></script><script type="module" src="firebase.js?v=28"></script><script src="app.js?v=43"></script><script src="signup-agreements.js?v=1"></script><script src="onboarding.js?v=1"></script><script src="busan-fishing-points.js?v=34"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script src="openstreet-map.js?v=13"></script>
   </body>
 </html>
