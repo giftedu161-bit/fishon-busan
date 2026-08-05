@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "purpose": "User-labelled reference candidates. These are not model weights; retain the original image files before training.",
+  "samples": [
+    { "file": "codex-clipboard-a4dbabae-7459-46e7-aa3f-bd3ac52fb095.png", "label": "KoreaRockfish", "koreanLabel": "\uC6B0\uB7ED", "sha256": "72b85fa49a345f41a56061f495d8aac47737c2e5ad24fd3a85da0cbd7d091da0" },
+    { "file": "codex-clipboard-7f6b87d6-8875-4543-8f35-5f7ebedf224f.png", "label": "KoreaRockfish", "koreanLabel": "\uC6B0\uB7ED", "sha256": "859e1fbdbe1669798eb3e8d7f8f8ecc2ad20410f6fe2c71cb61324bd0a0bc946" },
+    { "file": "codex-clipboard-06c93832-cb6f-4349-84fb-7a6237f414f5.png", "label": "KoreaRockfish", "koreanLabel": "\uC6B0\uB7ED", "sha256": "094b81367806ddcabd9d58813124bc52e84f68f68854e11e00263f4e3638fef5" },
+    { "file": "codex-clipboard-e29e137b-7117-45da-878a-f2d1da85b8da.png", "label": "KoreaRockfish", "koreanLabel": "\uC6B0\uB7ED", "sha256": "2bbb7dfcb8eeea37d3158c196b32e6cc00292a871112bd39f99cbcd0c1559cee" },
+    { "file": "codex-clipboard-c795dccf-78b7-4512-bd1e-b6ddc6122ebb.png", "label": "KoreaRockfish", "koreanLabel": "\uC6B0\uB7ED", "sha256": "4293ddd2b61014b568573a22e216700e48c164691ebfa7f3876855c149875375" },
+    { "file": "codex-clipboard-be298d1b-4b1d-4df9-94be-187383527858.png", "label": "KoreaRockfish", "koreanLabel": "\uC6B0\uB7ED", "sha256": "507a1d4373bf7bcee78c47dbf87d8c68a84fc3e09677a5cc37af9886550e274e" },
+    { "file": "codex-clipboard-8c006c00-3948-4fd8-a9da-29ca78d619a2.png", "label": "KoreaRockfish", "koreanLabel": "\uC6B0\uB7ED", "sha256": "5e957a7e7ea7d2c2ffdfe432ad6738f3ad5467f34320276a7c9e9b74b38238f8" },
+    { "file": "codex-clipboard-bdcd0232-b34c-4ed0-894c-a9d0d800237b.png", "label": "KoreaRockfish", "koreanLabel": "\uC6B0\uB7ED", "sha256": "12a0c1662716326fd1198f0ec62931f98f4cca1a14e6022f62694488889ac899" }
+  ]
+}
