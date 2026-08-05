@@ -44,11 +44,13 @@
       if (!candidate) return;
       const species = candidate.dataset.species || candidate.dataset.selectedSpecies;
       const confidence = asPercent(candidate.dataset.score || candidate.dataset.selectedScore);
+      const originalConfidence = Number(window.fishonAnalysisConfidence);
+      const preservedConfidence = Number.isFinite(originalConfidence) && originalConfidence > 0 ? originalConfidence : confidence / 100;
       window.fishonSelectedSpecies = species;
       window.renderAiVerification({
         species,
-        confidence: confidence / 100,
-        verified: confidence >= 40,
+        confidence: preservedConfidence,
+        verified: preservedConfidence >= 0.4,
         detail: `${species} 후보를 직접 선택했습니다. 사진과 실제 어종이 일치하는지 한 번 더 확인해주세요.`
       });
       window.toast?.(`${species}(으)로 조과 어종을 선택했어요.`);
