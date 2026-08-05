@@ -76,9 +76,3 @@
 #app:has(#rankingPage.active) .bottom-nav{background:#fff;box-shadow:0 -3px 14px #122d3712}
 #app:has(#rankingPage.active) .bottom-nav button{color:#789096}
 #app:has(#rankingPage.active) .bottom-nav .active{color:#08718b}
-
-/* 로그인에서도 선택할 수 있는 전체 글꼴 */
-.login-font-picker{display:flex;align-items:center;gap:6px;margin:14px 0 17px;padding:10px 11px;border:1px solid #d8e5e3;border-radius:14px;background:#fff}
-.login-font-picker span{margin-right:auto;color:#5d7b7d;font-size:11px;font-weight:800}
-.login-font-picker button{border:1px solid #d2dedf;border-radius:16px;background:#fff;padding:6px 9px;color:#557077;font-size:11px;white-space:nowrap}
-.login-font-picker button.selected{border-color:#0d7389;background:#e0f6f4;color:#086477;font-weight:800}
