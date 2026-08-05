@@ -1,4 +1,5 @@
 import base64
+import io
 import json
 import os
 import sys
@@ -10,18 +11,23 @@ import cv2
 import numpy as np
 import torch
 import yaml
+from PIL import Image, ImageOps
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 MODEL_ROOT = Path(__file__).resolve().parent.parent / "fish-ai-model"
 WEIGHTS = MODEL_ROOT / "trained_weight" / "20210222_efficientdet-d2_29_203900.pth"
 REFERENCE_MANIFEST = MODEL_ROOT / "training-reference-manifest.json"
+REFERENCE_CLASSIFIER_WEIGHTS = Path(__file__).resolve().parent / "models" / "reference_classifier.pt"
 KOREAN_LABELS = ["광어", "우럭", "참돔", "감성돔", "돌돔"]
 INPUT_SIZE = 768  # EfficientDet-D2
+CLASSIFIER_LABELS = ["OliveFlounder", "KoreaRockfish", "RedSeabream", "BlackPorgy", "RockBream"]
 
 sys.path.insert(0, str(MODEL_ROOT))
 _model = None
 _runtime_error = None
+_reference_classifier = None
+_reference_classifier_error = None
 
 app = FastAPI(title="FishOn Busan AI")
 app.add_middleware(
@@ -86,6 +92,33 @@ def prepare_image(payload: bytes):
     framed[: resized.shape[0], : resized.shape[1]] = resized
     tensor = torch.from_numpy(framed).unsqueeze(0).permute(0, 3, 1, 2).float()
     return tensor
+
+
+def classify_reference_photo(payload: bytes):
+    """Use the locally trained beta classifier only when it is more confident."""
+    global _reference_classifier, _reference_classifier_error
+    if not REFERENCE_CLASSIFIER_WEIGHTS.exists() or _reference_classifier_error:
+        return None
+    try:
+        if _reference_classifier is None:
+            from train_reference_classifier import IMAGE_SIZE, ReferenceFishNet
+            checkpoint = torch.load(REFERENCE_CLASSIFIER_WEIGHTS, map_location="cpu", weights_only=False)
+            model = ReferenceFishNet(len(checkpoint["labels"]))
+            model.load_state_dict(checkpoint["state_dict"])
+            model.eval()
+            _reference_classifier = (model, checkpoint["labels"], checkpoint["imageSize"])
+        model, labels, image_size = _reference_classifier
+        image = Image.open(io.BytesIO(payload)).convert("RGB")
+        image = ImageOps.fit(image, (image_size, image_size), method=Image.Resampling.BILINEAR)
+        pixels = np.asarray(image, dtype=np.float32).transpose(2, 0, 1) / 255.0
+        tensor = (torch.from_numpy(pixels) - torch.tensor([.485, .456, .406])[:, None, None]) / torch.tensor([.229, .224, .225])[:, None, None]
+        with torch.no_grad():
+            probabilities = torch.softmax(model(tensor.unsqueeze(0)), dim=1)[0]
+        index = int(torch.argmax(probabilities).item())
+        return {"label": labels[index], "confidence": float(probabilities[index].item())}
+    except Exception as error:
+        _reference_classifier_error = str(error)
+        return None
 
 
 def training_reference_summary():
@@ -192,11 +225,19 @@ async def analyze(image: UploadFile = File(...)):
         best_index = int(np.argmax(predictions["scores"]))
         class_id = int(predictions["class_ids"][best_index])
         confidence = float(predictions["scores"][best_index])
+        species = KOREAN_LABELS[class_id] if 0 <= class_id < len(KOREAN_LABELS) else None
+        message = "AI Hub detector result"
+        reference = classify_reference_photo(payload)
+        if reference and reference["confidence"] > confidence:
+            reference_index = CLASSIFIER_LABELS.index(reference["label"])
+            species = KOREAN_LABELS[reference_index]
+            confidence = reference["confidence"]
+            message = "FishOn 40-photo reference classifier result"
         return {
             "status": "ready",
-            "species": KOREAN_LABELS[class_id] if 0 <= class_id < len(KOREAN_LABELS) else None,
+            "species": species,
             "confidence": confidence,
-            "message": "AI Hub 학습 모델 분석 결과입니다.",
+            "message": message,
         }
     except ValueError as error:
         raise HTTPException(400, str(error))
