@@ -76,3 +76,10 @@
 #app:has(#rankingPage.active) .bottom-nav{background:#fff;box-shadow:0 -3px 14px #122d3712}
 #app:has(#rankingPage.active) .bottom-nav button{color:#789096}
 #app:has(#rankingPage.active) .bottom-nav .active{color:#08718b}
+
+/* 설정 > 글꼴 아래의 전체 글자 크기 조절 */
+.font-size-row{align-items:flex-start!important}
+.font-size-control{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;width:100%;margin-top:10px}
+.font-size-control small{color:#6d858a;font-size:10px;white-space:nowrap}
+.font-size-control input{width:100%;accent-color:#0b7c8f}
+.font-size-control output{grid-column:2/3;justify-self:center;color:#08718b;font-size:11px;font-weight:800}
